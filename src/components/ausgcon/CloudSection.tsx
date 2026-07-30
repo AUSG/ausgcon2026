@@ -11,8 +11,8 @@ export function CloudSection() {
         </div>
         <div className="cloud-atmosphere" aria-hidden="true" />
         <AnimatedAsset
-          src="/assets/ausgcon/cloud.png"
-          alt="반투명한 흰색 구름 키링 오브제"
+          src="/assets/ausgcon/cloudv2.png"
+          alt="반투명 구름 오브젝트"
           className="narrative__asset narrative__asset--cloud"
           width={992}
           height={1403}

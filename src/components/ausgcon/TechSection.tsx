@@ -5,8 +5,8 @@ export function TechSection() {
     <section id="tech" className="narrative narrative--tech" data-journey="TECH">
       <div className="container narrative__inner narrative__inner--reverse">
         <AnimatedAsset
-          src="/assets/ausgcon/tech.png"
-          alt="T E C H 글자가 새겨진 네 개의 반투명 키캡 키링"
+          src="/assets/ausgcon/keycapv2.png"
+          alt="T E C H 글자가 새겨진 네 개의 반투명 키캡"
           className="narrative__asset narrative__asset--tech"
           width={992}
           height={1403}

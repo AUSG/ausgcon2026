@@ -525,6 +525,11 @@ img {
   filter: drop-shadow(0 45px 50px rgba(105, 156, 212, 0.12));
 }
 
+.narrative__asset--cloud img {
+  transform: scale(1.55);
+  transform-origin: 50% 50%;
+}
+
 .cloud-atmosphere {
   position: absolute;
   z-index: 1;
@@ -560,6 +565,11 @@ img {
   top: -8%;
   width: min(38vw, 540px);
   filter: drop-shadow(0 38px 38px rgba(65, 114, 198, 0.18));
+}
+
+.narrative__asset--tech img {
+  transform: scale(2.2);
+  transform-origin: 50% 54%;
 }
 
 .challenge {
@@ -674,6 +684,11 @@ img {
   right: -4%;
   width: min(48vw, 680px);
   filter: drop-shadow(0 24px 28px rgba(183, 245, 0, 0.12));
+}
+
+.narrative__asset--jump img {
+  transform: scale(1.85);
+  transform-origin: 50% 45%;
 }
 
 .journey-indicator {
