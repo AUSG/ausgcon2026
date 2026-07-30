@@ -1,11 +1,9 @@
 import { AnimatedAsset } from "./AnimatedAsset";
-import { SectionLabel } from "./SectionLabel";
 
 export function TechSection() {
   return (
     <section id="tech" className="narrative narrative--tech" data-journey="TECH">
       <div className="container narrative__inner narrative__inner--reverse">
-        <SectionLabel index="02" name="TECH" />
         <AnimatedAsset
           src="/assets/ausgcon/tech.png"
           alt="T E C H 글자가 새겨진 네 개의 반투명 키캡 키링"

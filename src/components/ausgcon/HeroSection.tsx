@@ -44,8 +44,8 @@ export function HeroSection() {
         <motion.div
           className="hero__asset"
           style={{ x, y }}
-          initial={reducedMotion ? false : { opacity: 0, scale: 0.9, rotate: -17 }}
-          animate={{ opacity: 1, scale: 1, rotate: -23 }}
+          initial={reducedMotion ? false : { opacity: 0, scale: 0.9, rotate: -3 }}
+          animate={{ opacity: 1, scale: 1, rotate: -6 }}
           transition={{ duration: 1.2, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
           <Image

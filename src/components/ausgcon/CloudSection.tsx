@@ -1,11 +1,9 @@
 import { AnimatedAsset } from "./AnimatedAsset";
-import { SectionLabel } from "./SectionLabel";
 
 export function CloudSection() {
   return (
     <section id="cloud" className="narrative narrative--cloud" data-journey="CLOUD">
       <div className="container narrative__inner">
-        <SectionLabel index="01" name="CLOUD" />
         <div className="narrative__copy">
           <h2>CLOUD</h2>
           <p className="narrative__message">인프라를 이해하고<br />기반을 설계하다</p>
@@ -20,7 +18,6 @@ export function CloudSection() {
           height={1403}
         />
       </div>
-      <p className="transition-word" aria-hidden="true">FROM FOUNDATION</p>
     </section>
   );
 }

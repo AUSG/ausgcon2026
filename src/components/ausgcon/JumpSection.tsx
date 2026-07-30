@@ -1,11 +1,9 @@
 import { AnimatedAsset } from "./AnimatedAsset";
-import { SectionLabel } from "./SectionLabel";
 
 export function JumpSection() {
   return (
     <section id="jump" className="narrative narrative--jump" data-journey="JUMP">
       <div className="container narrative__inner">
-        <SectionLabel index="03" name="JUMP" inverted />
         <div className="narrative__copy narrative__copy--jump">
           <h2>JUMP</h2>
           <p className="narrative__message">도전을 발판 삼아<br />다음으로 뛰어오르다</p>
