@@ -338,7 +338,7 @@ img {
   position: absolute;
   z-index: 1;
   top: 50%;
-  right: clamp(72px, 6vw, 88px);
+  right: clamp(150px, 13vw, 200px);
   width: auto;
   height: min(84svh, 750px);
   aspect-ratio: 2480 / 3508;
