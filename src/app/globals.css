@@ -302,7 +302,7 @@ img {
   gap: 5px;
   margin-top: 34px;
   color: rgba(255, 255, 255, 0.68);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-latin);
   font-size: 0.72rem;
   letter-spacing: 0.08em;
 }
@@ -433,7 +433,7 @@ img {
 
 .journey-map span {
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-latin);
   font-size: 0.64rem;
 }
 
@@ -812,7 +812,7 @@ img {
   padding: 24px 18px;
   background: rgba(185, 216, 255, 0.3);
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-latin);
   font-size: 0.68rem;
   font-weight: 520;
   line-height: 1.45;
@@ -916,7 +916,7 @@ img {
   top: 16px;
   left: 16px;
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-latin);
   font-size: 0.62rem;
 }
 
@@ -1089,7 +1089,7 @@ img {
 
 .map-placeholder p span {
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-latin);
   font-size: 0.6rem;
   letter-spacing: 0;
 }
@@ -1133,7 +1133,7 @@ img {
 
 .faq-item button > span {
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-latin);
   font-size: 0.62rem;
 }
 
