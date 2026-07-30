@@ -515,7 +515,7 @@ img {
 }
 
 .narrative--cloud {
-  background: linear-gradient(to bottom, var(--paper) 0%, #f3f6f8 75%, var(--ice) 100%);
+  background: linear-gradient(to bottom, var(--paper) 0%, #f3f6f8 75%, #edf3f8 100%);
 }
 
 .narrative__asset--cloud {
@@ -674,19 +674,6 @@ img {
   right: -4%;
   width: min(48vw, 680px);
   filter: drop-shadow(0 24px 28px rgba(183, 245, 0, 0.12));
-}
-
-.jump-manifesto {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.055);
-  font-size: clamp(5.4rem, 14vw, 13rem);
-  font-weight: 700;
-  letter-spacing: -0.07em;
-  line-height: 0.72;
-  white-space: nowrap;
 }
 
 .journey-indicator {
@@ -1519,11 +1506,6 @@ img {
     width: 94%;
     margin: -18% -2% -18% auto;
     order: 3;
-  }
-
-  .jump-manifesto {
-    bottom: 16px;
-    font-size: 22vw;
   }
 
   .journey-indicator {

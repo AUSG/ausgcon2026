@@ -17,7 +17,6 @@ export function JumpSection() {
           height={1403}
         />
       </div>
-      <p className="jump-manifesto">EVERY CHALLENGE BECOMES THE NEXT JUMP.</p>
     </section>
   );
 }
