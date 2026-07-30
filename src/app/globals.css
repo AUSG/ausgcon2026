@@ -119,13 +119,11 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  border-bottom: 1px solid transparent;
   color: #f5f5f1;
-  transition: background 240ms ease, border-color 240ms ease, backdrop-filter 240ms ease;
+  transition: background 240ms ease, backdrop-filter 240ms ease;
 }
 
 .site-header--scrolled {
-  border-color: rgba(17, 17, 17, 0.09);
   background: rgba(247, 247, 245, 0.84);
   color: var(--ink);
   backdrop-filter: blur(18px);
@@ -517,14 +515,7 @@ img {
 }
 
 .narrative--cloud {
-  background: linear-gradient(
-    to bottom,
-    var(--night) 0%,
-    #26323e 10%,
-    #dbe6ef 28%,
-    #f2f6f9 64%,
-    #edf3f8 100%
-  );
+  background: linear-gradient(to bottom, var(--paper) 0%, #f3f6f8 75%, var(--ice) 100%);
 }
 
 .narrative__asset--cloud {
