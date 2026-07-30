@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const labels = ["CLOUD", "TECH", "CHALLENGE", "JUMP"];
+const labels = ["CLOUD", "TECH", "JUMP"];
 
 export function FloatingJourneyIndicator() {
   const [active, setActive] = useState("CLOUD");

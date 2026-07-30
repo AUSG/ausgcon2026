@@ -16,8 +16,8 @@ export function TechSection() {
         />
         <div className="narrative__copy narrative__copy--tech">
           <h2>TECH</h2>
-          <p className="narrative__message">기술을<br />도입하고<br /><br />적용해 본<br />경험을 나누다</p>
-          <p className="narrative__body">실제 적용 과정에서 마주한 선택과 시행착오,<br />그리고 운영 경험을 구체적으로 공유합니다.</p>
+          <p className="narrative__message">기술을 적용하고<br />경험을 나누다</p>
+          <p className="narrative__body">현장에서 마주한 선택과 시행착오를 구체적으로 공유합니다.</p>
         </div>
       </div>
     </section>

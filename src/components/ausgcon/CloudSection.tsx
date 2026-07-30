@@ -8,8 +8,8 @@ export function CloudSection() {
         <SectionLabel index="01" name="CLOUD" />
         <div className="narrative__copy">
           <h2>CLOUD</h2>
-          <p className="narrative__message">인프라의<br />아키텍처를 이해하고<br />기반을 세우다</p>
-          <p className="narrative__body">서비스의 기반이 되는 구조를 이해하고,<br />확장 가능하고 안정적인 시스템을 함께 고민합니다.</p>
+          <p className="narrative__message">인프라를 이해하고<br />기반을 설계하다</p>
+          <p className="narrative__body">확장 가능하고 안정적인 시스템의 출발점을 함께 고민합니다.</p>
         </div>
         <div className="cloud-atmosphere" aria-hidden="true" />
         <AnimatedAsset

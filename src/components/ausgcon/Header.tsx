@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const navigation = [
-  ["ABOUT", "#about"],
+  ["ABOUT", "#cloud"],
   ["SCHEDULE", "#schedule"],
   ["SPEAKERS", "#speakers"],
   ["VENUE", "#venue"],
@@ -32,7 +32,7 @@ export function Header() {
           ))}
         </nav>
         <div className="site-header__actions">
-          <a className="register-button register-button--small" href="#register">REGISTER</a>
+          <a className="register-button register-button--small" href="mailto:ausgcon@ausg.me">REGISTER</a>
           <button
             className="menu-button"
             type="button"

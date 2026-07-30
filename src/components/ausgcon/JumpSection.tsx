@@ -8,8 +8,8 @@ export function JumpSection() {
         <SectionLabel index="03" name="JUMP" inverted />
         <div className="narrative__copy narrative__copy--jump">
           <h2>JUMP</h2>
-          <p className="narrative__message">시행착오를<br />발판 삼아<br /><br />다음 단계로<br />뛰어오르다</p>
-          <p className="narrative__body">모든 도전은 실패로 끝나는 것이 아닙니다.<br />다음 성장을 위한 추진력이 됩니다.</p>
+          <p className="narrative__message">도전을 발판 삼아<br />다음으로 뛰어오르다</p>
+          <p className="narrative__body">모든 도전은 다음 성장을 위한 추진력이 됩니다.</p>
         </div>
         <AnimatedAsset
           src="/assets/ausgcon/jump.png"

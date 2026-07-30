@@ -1,10 +1,18 @@
 export type Track = "CLOUD" | "TECH" | "JUMP";
 
-export interface Session {
-  time: string;
+export interface TimetableSession {
   track: Track;
   title: string;
   speaker: string;
+}
+
+export interface TimetableRow {
+  time: string;
+  shared?: {
+    title: string;
+    speaker: string;
+  };
+  sessions?: TimetableSession[];
 }
 
 export interface Speaker {
@@ -20,14 +28,55 @@ export interface FAQ {
   answer: string;
 }
 
-export const sessions: Session[] = [
-  { time: "14:00", track: "CLOUD", title: "Opening — 여정의 시작", speaker: "AUSG" },
-  { time: "14:20", track: "CLOUD", title: "클라우드 인프라 아키텍처의 선택", speaker: "Speaker 01" },
-  { time: "15:00", track: "CLOUD", title: "확장 가능한 시스템을 설계하는 방법", speaker: "Speaker 02" },
-  { time: "15:40", track: "TECH", title: "실제 기술 도입 경험과 선택", speaker: "Speaker 03" },
-  { time: "16:20", track: "TECH", title: "운영 환경에서 마주한 문제와 해결", speaker: "Speaker 04" },
-  { time: "17:00", track: "JUMP", title: "실패를 다음 성장으로 연결하는 방법", speaker: "Speaker 05" },
-  { time: "17:40", track: "JUMP", title: "Closing — 다음 도약", speaker: "AUSG" },
+export const timetable: TimetableRow[] = [
+  {
+    time: "13:00 — 13:20",
+    shared: { title: "OPENING", speaker: "AUSG Organizer" },
+  },
+  {
+    time: "13:30 — 14:00",
+    sessions: [
+      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+    ],
+  },
+  {
+    time: "14:10 — 14:40",
+    sessions: [
+      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+    ],
+  },
+  {
+    time: "15:00 — 15:30",
+    sessions: [
+      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+    ],
+  },
+  {
+    time: "15:40 — 16:10",
+    sessions: [
+      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+    ],
+  },
+  {
+    time: "16:20 — 16:50",
+    sessions: [
+      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+    ],
+  },
+  {
+    time: "17:00 — 18:00",
+    shared: { title: "CLOSING & NETWORKING", speaker: "AUSG" },
+  },
 ];
 
 export const speakers: Speaker[] = [

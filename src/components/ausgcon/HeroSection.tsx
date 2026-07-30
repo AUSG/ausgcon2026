@@ -27,20 +27,18 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <p className="eyebrow">AWSKRUG UNIVERSITY STUDENT GROUP</p>
           <h1>
-            <span>AUSGCON 2026</span>
+            <span>AUSGCON 2026;</span>
             <strong>CHALLENGE</strong>
           </h1>
           <p className="hero__subtitle">Dive into Tech,<br />Jump into Future</p>
-          <p className="hero__statement">Every challenge becomes the next jump.</p>
           <div className="hero__meta">
-            <span>2026. MM. DD</span>
-            <span>SEOUL</span>
+            <span>2026.09.05.SAT 1PM — 6PM</span>
+            <span>AWS Korea CENTERFIELD</span>
           </div>
           <div className="hero__actions">
-            <a className="register-button" href="#register">사전 등록하기 <span>↗</span></a>
-            <a className="text-link" href="#schedule">프로그램 미리보기 <span>↓</span></a>
+            <a className="register-button register-button--lime" href="mailto:ausgcon@ausg.me">등록하기 <span>↗</span></a>
+            <a className="text-link text-link--light" href="#schedule">프로그램 다시보기 <span>›</span></a>
           </div>
         </motion.div>
         <motion.div
