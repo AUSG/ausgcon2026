@@ -283,6 +283,12 @@ img {
   white-space: nowrap;
 }
 
+.hero h1 span {
+  font-family: var(--font-unbounded), var(--font-latin);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+}
+
 .hero h1 strong {
   margin-top: 0.2em;
   color: var(--lime);
@@ -526,7 +532,7 @@ img {
 }
 
 .narrative__asset--cloud img {
-  transform: scale(1.55);
+  transform: scale(1.25);
   transform-origin: 50% 50%;
 }
 
@@ -568,7 +574,7 @@ img {
 }
 
 .narrative__asset--tech img {
-  transform: scale(2.2);
+  transform: scale(1.7);
   transform-origin: 50% 54%;
 }
 
@@ -687,7 +693,7 @@ img {
 }
 
 .narrative__asset--jump img {
-  transform: scale(1.85);
+  transform: scale(1.45);
   transform-origin: 50% 45%;
 }
 
@@ -1641,6 +1647,10 @@ img {
 
   .hero h1 {
     font-size: 11vw;
+  }
+
+  .hero h1 span {
+    font-size: 9vw;
   }
 
   .hero__subtitle {

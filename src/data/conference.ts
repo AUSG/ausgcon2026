@@ -30,11 +30,11 @@ export interface FAQ {
 
 export const timetable: TimetableRow[] = [
   {
-    time: "13:00 — 13:20",
+    time: "13:00 - 13:20",
     shared: { title: "OPENING", speaker: "AUSG Organizer" },
   },
   {
-    time: "13:30 — 14:00",
+    time: "13:30 - 14:00",
     sessions: [
       { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
       { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
@@ -42,7 +42,7 @@ export const timetable: TimetableRow[] = [
     ],
   },
   {
-    time: "14:10 — 14:40",
+    time: "14:10 - 14:40",
     sessions: [
       { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
       { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
@@ -50,7 +50,7 @@ export const timetable: TimetableRow[] = [
     ],
   },
   {
-    time: "15:00 — 15:30",
+    time: "15:00 - 15:30",
     sessions: [
       { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
       { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
@@ -58,7 +58,7 @@ export const timetable: TimetableRow[] = [
     ],
   },
   {
-    time: "15:40 — 16:10",
+    time: "15:40 - 16:10",
     sessions: [
       { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
       { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
@@ -66,7 +66,7 @@ export const timetable: TimetableRow[] = [
     ],
   },
   {
-    time: "16:20 — 16:50",
+    time: "16:20 - 16:50",
     sessions: [
       { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
       { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
@@ -74,7 +74,7 @@ export const timetable: TimetableRow[] = [
     ],
   },
   {
-    time: "17:00 — 18:00",
+    time: "17:00 - 18:00",
     shared: { title: "CLOSING & NETWORKING", speaker: "AUSG" },
   },
 ];
