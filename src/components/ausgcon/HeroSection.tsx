@@ -69,7 +69,6 @@ export function HeroSection() {
           />
         </motion.div>
       </div>
-      <p className="hero__scroll">SCROLL TO BEGIN <span aria-hidden="true">↓</span></p>
     </section>
   );
 }

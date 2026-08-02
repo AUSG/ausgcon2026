@@ -112,8 +112,7 @@ export const speakers: Speaker[] = [
   { name: "김수빈", track: "TECH", session: "Agent와 일하기 위해 처음부터 다시 생각하기", description: "AWS와 Kiro로 Agent의 실행 환경, 도구, 개선과 검증 루프를 다시 만든 경험을 공유합니다.", image: null },
   { name: "김민태", track: "JUMP", session: "우리는 AI를 어떤 자세로 사용해야 할까?", description: "AI 시대의 엔지니어가 대체에 대한 불안을 넘어 어떤 태도를 취해야 할지 함께 질문합니다.", image: null },
   { name: "최용호", track: "ALL", session: "AI 시대에 알아야 할 AI 트렌드 총정리", description: "AI 코딩 에이전트와 MCP, 하네스 엔지니어링부터 루프 엔지니어링까지의 흐름을 정리합니다.", image: null },
-  { name: "지현숙", track: "HANDS-ON", session: "TBD", description: "핸즈온 세션의 상세 정보는 곧 공개됩니다.", image: null },
-  { name: "장인호", track: "HANDS-ON", session: "TBD", description: "핸즈온 세션의 상세 정보는 곧 공개됩니다.", image: null },
+  { name: "지현숙 · 장인호", track: "HANDS-ON", session: "TBD", description: "두 연사자가 함께 진행하는 핸즈온 세션입니다. 상세 정보는 곧 공개됩니다.", image: null },
   { name: "박상운", track: "HANDS-ON", session: "Serverless Agentic AI 직접 구현하기", description: "직접 구현하며 Serverless Agentic AI의 구성과 실행 흐름을 경험합니다.", image: null },
 ];
 
