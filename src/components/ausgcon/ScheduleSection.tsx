@@ -17,6 +17,21 @@ interface SessionDetail {
 const tracks: Track[] = ["CLOUD", "TECH", "JUMP"];
 const mobileTracks: MobileTrack[] = [...tracks, "HANDS-ON"];
 
+function parseTimeRange(range: string) {
+  return range.split(" - ").map((time) => {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
+  });
+}
+
+function overlapsHandsOn(time: string) {
+  const [start, end] = parseTimeRange(time);
+  return handsOnSessions.some((session) => {
+    const [sessionStart, sessionEnd] = parseTimeRange(session.time);
+    return start < sessionEnd && end > sessionStart;
+  });
+}
+
 function normalizeSpeakerName(name: string) {
   return name.replaceAll("&", "·").replaceAll(" ", "");
 }
@@ -105,7 +120,7 @@ export function ScheduleSection() {
                   className="program-card program-card--shared"
                   role="cell"
                   aria-label={`세션 상세 보기: ${row.shared.title}`}
-                  style={{ gridColumn: "2 / 5", gridRow: rowIndex + 2 }}
+                  style={{ gridColumn: overlapsHandsOn(row.time) ? "2 / 5" : "2 / -1", gridRow: rowIndex + 2 }}
                   onClick={(event) => openSession(event.currentTarget, row.shared!.title, row.shared!.speaker, "ALL")}
                   >
                     <strong>{row.shared.title}</strong>
