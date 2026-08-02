@@ -15,6 +15,12 @@ export interface TimetableRow {
   sessions?: TimetableSession[];
 }
 
+export interface HandsOnSession {
+  time: string;
+  title: string;
+  speaker: string;
+}
+
 export interface Speaker {
   name: string;
   track: Track | "ALL";
@@ -76,6 +82,19 @@ export const timetable: TimetableRow[] = [
   {
     time: "17:20 - 17:50",
     shared: { title: "CLOSING", speaker: "AUSG Organizer" },
+  },
+];
+
+export const handsOnSessions: HandsOnSession[] = [
+  {
+    time: "13:30 - 14:45",
+    title: "TBD",
+    speaker: "지현숙 & 장인호",
+  },
+  {
+    time: "15:10 - 17:10",
+    title: "Serverless Agentic AI 직접 구현하기",
+    speaker: "박상운",
   },
 ];
 

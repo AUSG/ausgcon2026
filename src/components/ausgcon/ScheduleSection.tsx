@@ -1,4 +1,5 @@
-import { timetable, type Track } from "@/data/conference";
+import { handsOnSessions, timetable, type Track } from "@/data/conference";
+import { Fragment } from "react";
 
 const tracks: Track[] = ["CLOUD", "TECH", "JUMP"];
 
@@ -7,10 +8,6 @@ export function ScheduleSection() {
     <section id="schedule" className="schedule content-section">
       <div className="container">
         <header className="schedule__heading">
-          <div className="schedule__meta">
-            <span>2026.09.05 / AWS KOREA</span>
-            <span>13:00 - 18:00</span>
-          </div>
           <h2><span>ONE TIME.</span><em>THREE TRACKS.</em></h2>
           <p>Cloud, Tech, Jump. 세 개의 트랙이 같은 시간 위에서 각자의 도전을 시작합니다.</p>
         </header>
@@ -18,21 +15,31 @@ export function ScheduleSection() {
           <div className="program-board__header" role="row">
             <span role="columnheader">TIME</span>
             {tracks.map((track) => <span role="columnheader" key={track}>{track}</span>)}
+            <span role="columnheader">HANDS-ON</span>
           </div>
           {timetable.map((row, rowIndex) => (
-            <div className={`program-row${row.shared ? " program-row--shared" : ""}`} role="row" key={row.time}>
-              <time role="rowheader">{row.time}</time>
+            <Fragment key={row.time}>
+              <time className="program-time" style={{ gridColumn: 1, gridRow: rowIndex + 2 }}>{row.time}</time>
               {row.shared ? (
-                <article className="program-card program-card--shared" role="cell">
+                <article
+                  className="program-card program-card--shared"
+                  role="cell"
+                  style={{ gridColumn: "2 / -1", gridRow: rowIndex + 2 }}
+                >
                   <span>{String(rowIndex + 1).padStart(2, "0")}</span>
                   <strong>{row.shared.title}</strong>
                   <small>{row.shared.speaker}</small>
                 </article>
               ) : (
-                tracks.map((track) => {
+                tracks.map((track, trackIndex) => {
                   const session = row.sessions?.find((item) => item.track === track);
                   return (
-                    <article className={`program-card program-card--${track.toLowerCase()}`} role="cell" key={track}>
+                    <article
+                      className={`program-card program-card--${track.toLowerCase()}`}
+                      role="cell"
+                      style={{ gridColumn: trackIndex + 2, gridRow: rowIndex + 2 }}
+                      key={track}
+                    >
                       <span>{track}</span>
                       <strong>{session?.title ?? "TBD"}</strong>
                       <small>{session?.speaker ?? "TBD"}</small>
@@ -40,7 +47,20 @@ export function ScheduleSection() {
                   );
                 })
               )}
-            </div>
+            </Fragment>
+          ))}
+          {handsOnSessions.map((session, index) => (
+            <article
+              className="program-card program-card--hands-on"
+              role="cell"
+              style={{ gridColumn: 5, gridRow: `${index === 0 ? 4 : 6} / span 2` }}
+              key={session.time}
+            >
+              <span>HANDS-ON 0{index + 1}</span>
+              <time>{session.time}</time>
+              <strong>{session.title}</strong>
+              <small>{session.speaker}</small>
+            </article>
           ))}
         </div>
       </div>

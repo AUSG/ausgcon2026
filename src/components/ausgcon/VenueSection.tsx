@@ -6,17 +6,24 @@ export function VenueSection() {
           <p className="eyebrow">VENUE</p>
           <h2>AWS Korea</h2>
           <p className="venue__city">Seoul,<br />Republic of Korea</p>
-          <p>정확한 장소와 입장 방법은 추후 안내됩니다.</p>
+          <p>센터필드 EAST 18층 AWS Korea에서 만나요.</p>
           <dl>
-            <div><dt>ADDRESS</dt><dd>To be announced</dd></div>
-            <div><dt>TRANSIT</dt><dd>대중교통 안내 예정</dd></div>
+            <div><dt>ADDRESS</dt><dd>서울 강남구 테헤란로 231<br />센터필드 EAST 18F AWS Korea</dd></div>
+            <div><dt>TRANSIT</dt><dd>역삼역 8번 출구에서 도보 8분</dd></div>
           </dl>
-          <button className="outline-button" type="button" disabled>OPEN MAP <span>↗</span></button>
         </div>
-        <div className="map-placeholder" aria-label="행사장 지도 준비 중">
-          <div className="map-placeholder__roads" aria-hidden="true" />
-          <span className="map-placeholder__pin" aria-hidden="true" />
-          <p>SEOUL<br /><span>37.5665° N, 126.9780° E</span></p>
+        <div className="venue-map">
+          <iframe
+            title="AWS Korea 센터필드 위치"
+            src="https://www.google.com/maps?q=AWS%20Korea%20Centerfield%20Seoul&output=embed"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=AWS%20Korea%20Centerfield%20Seoul"
+            target="_blank"
+            rel="noreferrer"
+          >GOOGLE MAPS <span>↗</span></a>
         </div>
       </div>
     </section>
