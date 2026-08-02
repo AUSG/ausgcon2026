@@ -7,6 +7,7 @@ export function Footer() {
           <a href="#cloud">ABOUT</a>
           <a href="#schedule">SCHEDULE</a>
           <a href="#speakers">SPEAKERS</a>
+          <a href="#mentoring">MENTORING</a>
           <a href="#venue">VENUE</a>
           <a href="#faq">FAQ</a>
         </nav>

@@ -6,6 +6,7 @@ const navigation = [
   ["ABOUT", "#cloud"],
   ["SCHEDULE", "#schedule"],
   ["SPEAKERS", "#speakers"],
+  ["MENTORING", "#mentoring"],
   ["VENUE", "#venue"],
 ];
 
