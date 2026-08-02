@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const navigation = [
-  ["ABOUT", "#cloud"],
+  ["ABOUT", "#about"],
   ["SCHEDULE", "#schedule"],
   ["SPEAKERS", "#speakers"],
   ["MENTORING", "#mentoring"],
@@ -19,7 +19,7 @@ export function Header() {
     const update = () => {
       setScrolled(window.scrollY > 16);
       const probeY = Math.min(88, window.innerHeight - 1);
-      const currentSection = Array.from(document.querySelectorAll<HTMLElement>("main > section"))
+      const currentSection = Array.from(document.querySelectorAll<HTMLElement>("main section"))
         .find((section) => {
           const rect = section.getBoundingClientRect();
           return rect.top <= probeY && rect.bottom > probeY;
@@ -33,7 +33,7 @@ export function Header() {
         return;
       }
 
-      setTheme(["top", "schedule", "speakers"].includes(currentSection.id) ? "dark" : "light");
+      setTheme(["top", "about", "schedule", "speakers"].includes(currentSection.id) ? "dark" : "light");
     };
     update();
     window.addEventListener("scroll", update, { passive: true });

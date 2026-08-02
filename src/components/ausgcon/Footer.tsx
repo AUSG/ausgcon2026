@@ -4,7 +4,7 @@ export function Footer() {
       <div className="container footer__inner">
         <a className="brand brand--light" href="#top">AUSGCON <span>2026</span></a>
         <nav aria-label="푸터 메뉴">
-          <a href="#cloud">ABOUT</a>
+          <a href="#about">ABOUT</a>
           <a href="#schedule">SCHEDULE</a>
           <a href="#speakers">SPEAKERS</a>
           <a href="#mentoring">MENTORING</a>

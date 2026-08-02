@@ -140,7 +140,7 @@ export function ScheduleSection() {
               className="program-card program-card--hands-on"
               role="cell"
               aria-label={`세션 상세 보기: ${session.title}`}
-              style={{ gridColumn: 5, gridRow: `${index === 0 ? 4 : 6} / span 2` }}
+              style={{ gridColumn: 5, gridRow: index === 0 ? "4 / span 2" : "6 / span 3" }}
               onClick={(event) => openSession(event.currentTarget, session.title, session.speaker, "HANDS-ON")}
               key={session.time}
             >

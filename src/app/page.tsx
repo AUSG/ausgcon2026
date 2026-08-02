@@ -1,3 +1,4 @@
+import { AboutSection } from "@/components/ausgcon/AboutSection";
 import { CloudSection } from "@/components/ausgcon/CloudSection";
 import { FAQSection } from "@/components/ausgcon/FAQSection";
 import { Footer } from "@/components/ausgcon/Footer";
@@ -16,6 +17,7 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
+        <AboutSection />
         <div className="journey-flow">
           <CloudSection />
           <TechSection />

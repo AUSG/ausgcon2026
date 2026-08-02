@@ -12,24 +12,25 @@ export function MentoringSection() {
         <header className="mentoring__heading">
           <span className="eyebrow">CAREER MENTORING</span>
           <h2>MENTORING</h2>
-          <p>당신의 다음 선택을 위한 45분의 1:1 대화.</p>
-        </header>
-
-        <div className="mentoring__overview">
-          <div className="mentoring__summary">
-            <strong>1:1 · 45 MINUTES · RESERVATION ONLY</strong>
-            <p>
-              취업·이직을 준비하는 대학생과 1~3년차 주니어 개발자를 위한 45분 커리어 멘토링입니다.
-              준비한 자료와 질문을 바탕으로 독립된 미팅룸에서 진행합니다.
-            </p>
+          <div className="mentoring__lead">
+            <div>
+              <p className="mentoring__tagline">당신의 다음 선택을 위한 45분의 1:1 대화.</p>
+              <p className="mentoring__description">
+                <strong>1:1 · 45 MINUTES · RESERVATION ONLY</strong>
+                <span>
+                  취업·이직을 준비하는 대학생과 1~3년차 주니어 개발자를 위한 45분 커리어 멘토링입니다.
+                  준비한 자료와 질문을 바탕으로 독립된 미팅룸에서 진행합니다.
+                </span>
+              </p>
+            </div>
+            <a
+              className="mentoring__apply"
+              href="mailto:ausgcon@ausg.me?subject=AUSGCON%202026%20커리어%20멘토링%20신청"
+            >
+              신청하러 가기 <span>↗</span>
+            </a>
           </div>
-          <a
-            className="mentoring__apply"
-            href="mailto:ausgcon@ausg.me?subject=AUSGCON%202026%20커리어%20멘토링%20신청"
-          >
-            신청하러 가기 <span>↗</span>
-          </a>
-        </div>
+        </header>
 
         <div className="mentor-grid">
           {mentors.map((mentor, index) => (
@@ -48,13 +49,6 @@ export function MentoringSection() {
           ))}
         </div>
 
-        <div className="mentoring__note">
-          <strong>BEFORE THE SESSION</strong>
-          <p>
-            신청 시 이력서·포트폴리오·자기소개서 중 1개 이상과 가장 묻고 싶은 질문 1개를 제출합니다.
-            동의한 자료만 행사 3일 전 멘토에게 전달되며 행사 종료 후 폐기합니다.
-          </p>
-        </div>
       </div>
     </section>
   );

@@ -49,7 +49,7 @@ export function SpeakersSection() {
             return (
               <button
                 type="button"
-                className={`speaker-card${isDuo ? " speaker-card--duo" : ""}`}
+                className={`speaker-card speaker-card--${speaker.track.toLowerCase()}${isDuo ? " speaker-card--duo" : ""}`}
                 aria-haspopup="dialog"
                 aria-label={`${speaker.name} 연사 및 발표 정보 보기`}
                 onClick={(event) => {
