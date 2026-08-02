@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface AnimatedAssetProps {
@@ -40,12 +40,53 @@ export function AnimatedAsset({
     [0, 1],
     reducedMotion ? [0, 0] : [-1.5 * direction, 1.5 * direction],
   );
+  const pointerXValue = useMotionValue(0);
+  const pointerYValue = useMotionValue(0);
+  const pointerRotateValue = useMotionValue(0);
+  const pointerX = useSpring(pointerXValue, { stiffness: 95, damping: 22 });
+  const pointerY = useSpring(pointerYValue, { stiffness: 95, damping: 22 });
+  const pointerRotate = useSpring(pointerRotateValue, { stiffness: 90, damping: 24 });
+  const combinedY = useTransform(
+    [translateY, pointerY],
+    ([scrollOffset, pointerOffset]) => Number(scrollOffset) + Number(pointerOffset),
+  );
+  const combinedRotate = useTransform(
+    [rotate, pointerRotate],
+    ([scrollRotation, pointerRotation]) => Number(scrollRotation) + Number(pointerRotation),
+  );
+
+  useEffect(() => {
+    const section = ref.current?.closest(".narrative") as HTMLElement | null;
+    if (!section || reducedMotion) return;
+
+    const resetPointer = () => {
+      pointerXValue.set(0);
+      pointerYValue.set(0);
+      pointerRotateValue.set(0);
+    };
+    const handlePointerMove = (event: globalThis.PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+      const rect = section.getBoundingClientRect();
+      const normalizedX = (event.clientX - rect.left) / rect.width - 0.5;
+      const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
+      pointerXValue.set(normalizedX * 56 * direction);
+      pointerYValue.set(normalizedY * 36);
+      pointerRotateValue.set(normalizedX * 5 * direction);
+    };
+
+    section.addEventListener("pointermove", handlePointerMove);
+    section.addEventListener("pointerleave", resetPointer);
+    return () => {
+      section.removeEventListener("pointermove", handlePointerMove);
+      section.removeEventListener("pointerleave", resetPointer);
+    };
+  }, [direction, pointerRotateValue, pointerXValue, pointerYValue, reducedMotion]);
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      style={{ y: translateY, rotate }}
+      style={{ x: pointerX, y: combinedY, rotate: combinedRotate }}
       initial={reducedMotion ? false : { opacity: 0, scale: 0.97 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}

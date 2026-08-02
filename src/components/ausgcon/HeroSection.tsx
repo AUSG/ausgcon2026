@@ -9,16 +9,27 @@ export function HeroSection() {
   const reducedMotion = useReducedMotion();
   const x = useSpring(useMotionValue(0), { stiffness: 80, damping: 24 });
   const y = useSpring(useMotionValue(0), { stiffness: 80, damping: 24 });
+  const rotateValue = useMotionValue(-6);
+  const rotate = useSpring(rotateValue, { stiffness: 85, damping: 24 });
 
   const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
     if (reducedMotion || event.pointerType !== "mouse") return;
     const rect = event.currentTarget.getBoundingClientRect();
-    x.set((event.clientX - rect.left - rect.width / 2) * 0.018);
-    y.set((event.clientY - rect.top - rect.height / 2) * 0.018);
+    const normalizedX = (event.clientX - rect.left) / rect.width - 0.5;
+    const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
+    x.set(normalizedX * 78);
+    y.set(normalizedY * 46);
+    rotateValue.set(-6 + normalizedX * 5);
+  };
+
+  const handlePointerLeave = () => {
+    x.set(0);
+    y.set(0);
+    rotateValue.set(-6);
   };
 
   return (
-    <section id="top" className="hero" onPointerMove={handlePointerMove}>
+    <section id="top" className="hero" onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>
       <div className="hero__grid" aria-hidden="true" />
       <div className="container hero__inner">
         <motion.div
@@ -43,9 +54,9 @@ export function HeroSection() {
         </motion.div>
         <motion.div
           className="hero__asset"
-          style={{ x, y }}
-          initial={reducedMotion ? false : { opacity: 0, scale: 0.9, rotate: -3 }}
-          animate={{ opacity: 1, scale: 1, rotate: -6 }}
+          style={{ x, y, rotate }}
+          initial={reducedMotion ? false : { opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
           <Image

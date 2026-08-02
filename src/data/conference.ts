@@ -17,9 +17,9 @@ export interface TimetableRow {
 
 export interface Speaker {
   name: string;
-  company: string;
-  role: string;
+  track: Track | "ALL";
   session: string;
+  description: string;
   image: string | null;
 }
 
@@ -30,62 +30,69 @@ export interface FAQ {
 
 export const timetable: TimetableRow[] = [
   {
+    time: "12:30 - 13:00",
+    shared: { title: "CHECK-IN", speaker: "참가자 입장" },
+  },
+  {
     time: "13:00 - 13:20",
-    shared: { title: "OPENING", speaker: "AUSG Organizer" },
+    shared: { title: "OPENING", speaker: "행사 및 스폰서 소개" },
   },
   {
     time: "13:30 - 14:00",
     sessions: [
-      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "CLOUD", title: "양자 중첩으로 미로 탈출 w/ Amazon Braket", speaker: "김민준" },
+      { track: "TECH", title: "RAG가 하는 거짓말, 어떻게 잡을 수 있을까?", speaker: "김대현" },
+      { track: "JUMP", title: "공진성의 마술쇼", speaker: "공진성" },
     ],
   },
   {
-    time: "14:10 - 14:40",
+    time: "14:15 - 14:45",
     sessions: [
-      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "CLOUD", title: "Bedrock AgentCore로 멀티채널 SNS 에이전트 만들기", speaker: "이은지" },
+      { track: "TECH", title: "Node.js, Java, Go 동시성 비교하기", speaker: "이지호" },
+      { track: "JUMP", title: "TBD", speaker: "김보람" },
     ],
   },
   {
-    time: "15:00 - 15:30",
+    time: "15:10 - 15:40",
     sessions: [
-      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "CLOUD", title: "모노레포 쪼개고 배포하기: Monorepo on ECS", speaker: "배진수" },
+      { track: "TECH", title: "클로 야호~!", speaker: "길상혁" },
+      { track: "JUMP", title: "성장곡선과 행복곡선", speaker: "신현수" },
     ],
   },
   {
-    time: "15:40 - 16:10",
+    time: "15:55 - 16:25",
     sessions: [
-      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
+      { track: "CLOUD", title: "TBD", speaker: "강시온" },
+      { track: "TECH", title: "Agent와 일하기 위해 처음부터 다시 생각하기", speaker: "김수빈" },
+      { track: "JUMP", title: "우리는 AI를 어떤 자세로 사용해야 할까?", speaker: "김민태" },
     ],
   },
   {
-    time: "16:20 - 16:50",
-    sessions: [
-      { track: "CLOUD", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "JUMP", title: "Session title TBA", speaker: "Speaker TBA" },
-      { track: "TECH", title: "Session title TBA", speaker: "Speaker TBA" },
-    ],
+    time: "16:40 - 17:10",
+    shared: { title: "AI 시대에 알아야 할 AI 트렌드 총정리", speaker: "최용호" },
   },
   {
-    time: "17:00 - 18:00",
-    shared: { title: "CLOSING & NETWORKING", speaker: "AUSG" },
+    time: "17:20 - 17:50",
+    shared: { title: "CLOSING", speaker: "AUSG Organizer" },
   },
 ];
 
 export const speakers: Speaker[] = [
-  { name: "Speaker 01", company: "Company", role: "Cloud Engineer", session: "클라우드 인프라 아키텍처의 선택", image: null },
-  { name: "Speaker 02", company: "Company", role: "Platform Engineer", session: "확장 가능한 시스템을 설계하는 방법", image: null },
-  { name: "Speaker 03", company: "Company", role: "Software Engineer", session: "실제 기술 도입 경험과 선택", image: null },
-  { name: "Speaker 04", company: "Company", role: "DevOps Engineer", session: "운영 환경에서 마주한 문제와 해결", image: null },
-  { name: "Speaker 05", company: "Company", role: "Engineering Lead", session: "실패를 다음 성장으로 연결하는 방법", image: null },
-  { name: "Speaker 06", company: "AUSG", role: "Community Builder", session: "다음 도약을 만드는 커뮤니티", image: null },
+  { name: "김민준", track: "CLOUD", session: "양자 중첩으로 미로 탈출 w/ Amazon Braket", description: "AWS 양자 컴퓨팅 서비스와 간단한 문제를 풀며 양자컴퓨터를 가깝게 만납니다.", image: null },
+  { name: "김대현", track: "TECH", session: "RAG가 하는 거짓말, 어떻게 잡을 수 있을까?", description: "RAG의 환각을 발견하고 평가하는 방법과 Cloud에 구축한 검증 파이프라인을 공유합니다.", image: null },
+  { name: "공진성", track: "JUMP", session: "공진성의 마술쇼", description: "반복된 실패를 발판 삼아 취업까지 이어 간 경험과 자신만의 카드를 발견한 이야기를 나눕니다.", image: null },
+  { name: "이은지", track: "CLOUD", session: "Bedrock AgentCore로 멀티채널 SNS 에이전트 만들기", description: "채널별 톤에 맞는 SNS 콘텐츠를 생성하고 게시하는 자동화 에이전트 개발 경험을 소개합니다.", image: null },
+  { name: "이지호", track: "TECH", session: "Node.js, Java, Go 동시성 비교하기", description: "동시성이 필요한 하나의 예제를 세 언어로 구현하며 각 언어의 철학을 비교합니다.", image: null },
+  { name: "김보람", track: "JUMP", session: "TBD", description: "세션 상세 정보는 곧 공개됩니다.", image: null },
+  { name: "배진수", track: "CLOUD", session: "모노레포 쪼개고 배포하기: Monorepo on ECS", description: "Amazon ECS에서 모노레포를 선택적으로 빌드하고 배포하는 전략과 주의점을 살펴봅니다.", image: null },
+  { name: "길상혁", track: "TECH", session: "클로 야호~!", description: "Claude를 더 쉽고 친숙하게 활용할 수 있도록 실제 사용 경험을 가볍게 공유합니다.", image: null },
+  { name: "신현수", track: "JUMP", session: "성장곡선과 행복곡선", description: "재미로 시작한 취미가 업이 되기까지, 대학생 엔지니어의 성장과 행복에 대한 생각을 나눕니다.", image: null },
+  { name: "강시온", track: "CLOUD", session: "TBD", description: "세션 상세 정보는 곧 공개됩니다.", image: null },
+  { name: "김수빈", track: "TECH", session: "Agent와 일하기 위해 처음부터 다시 생각하기", description: "AWS와 Kiro로 Agent의 실행 환경, 도구, 개선과 검증 루프를 다시 만든 경험을 공유합니다.", image: null },
+  { name: "김민태", track: "JUMP", session: "우리는 AI를 어떤 자세로 사용해야 할까?", description: "AI 시대의 엔지니어가 대체에 대한 불안을 넘어 어떤 태도를 취해야 할지 함께 질문합니다.", image: null },
+  { name: "최용호", track: "ALL", session: "AI 시대에 알아야 할 AI 트렌드 총정리", description: "AI 코딩 에이전트와 MCP, 하네스 엔지니어링부터 루프 엔지니어링까지의 흐름을 정리합니다.", image: null },
 ];
 
 export const faqs: FAQ[] = [
