@@ -17,8 +17,8 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
-        <AboutSection />
         <div className="journey-flow">
+          <AboutSection />
           <CloudSection />
           <TechSection />
           <JumpSection />

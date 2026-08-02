@@ -3,8 +3,7 @@ export function AboutSection() {
     <section id="about" className="about-brief">
       <div className="container about-brief__inner">
         <header>
-          <span>ABOUT AUSGCON</span>
-          <h2>AUSGCON이<br />뭔가요?</h2>
+          <h2>AUSGCON</h2>
         </header>
         <div className="about-brief__copy">
           <p>AUSGCON은 AUSG에서 매년 개최하는 IT 컨퍼런스로, 올해 4회를 맞이합니다.</p>

@@ -48,7 +48,12 @@ export function HeroSection() {
             <span>AWS Korea CENTERFIELD</span>
           </div>
           <div className="hero__actions">
-            <a className="register-button register-button--lime" href="mailto:ausgcon@ausg.me">등록하기 <span>↗</span></a>
+            <a
+              className="register-button register-button--lime"
+              href="https://event-us.kr/m/131417/58268"
+              target="_blank"
+              rel="noreferrer"
+            >등록하기 <span>↗</span></a>
             <a className="text-link text-link--light" href="#schedule">프로그램 다시보기 <span>›</span></a>
           </div>
         </motion.div>

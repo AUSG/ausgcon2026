@@ -12,9 +12,9 @@ export function Footer() {
           <a href="#faq">FAQ</a>
         </nav>
         <div className="footer__social">
-          <a href="https://www.instagram.com/ausg.me/" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://github.com/ausg" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.instagram.com/ausg.awskrug/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://kr.linkedin.com/company/ausg-kr" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://github.com/AUSG" target="_blank" rel="noreferrer">GitHub</a>
         </div>
         <p>© 2026 AUSG. All rights reserved.</p>
       </div>

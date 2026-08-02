@@ -33,7 +33,7 @@ export function Header() {
         return;
       }
 
-      setTheme(["top", "about", "schedule", "speakers"].includes(currentSection.id) ? "dark" : "light");
+      setTheme(["top", "schedule", "speakers"].includes(currentSection.id) ? "dark" : "light");
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -56,7 +56,12 @@ export function Header() {
           ))}
         </nav>
         <div className="site-header__actions">
-          <a className="register-button register-button--small" href="mailto:ausgcon@ausg.me">REGISTER</a>
+          <a
+            className="register-button register-button--small"
+            href="https://event-us.kr/m/131417/58268"
+            target="_blank"
+            rel="noreferrer"
+          >REGISTER</a>
           <button
             className="menu-button"
             type="button"

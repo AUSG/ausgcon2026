@@ -105,7 +105,7 @@ export function ScheduleSection() {
                   className="program-card program-card--shared"
                   role="cell"
                   aria-label={`세션 상세 보기: ${row.shared.title}`}
-                  style={{ gridColumn: "2 / -1", gridRow: rowIndex + 2 }}
+                  style={{ gridColumn: "2 / 5", gridRow: rowIndex + 2 }}
                   onClick={(event) => openSession(event.currentTarget, row.shared!.title, row.shared!.speaker, "ALL")}
                   >
                     <strong>{row.shared.title}</strong>
