@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @font-face {
@@ -27,7 +28,9 @@
   --blue: #b9d8ff;
   --line: color-mix(in srgb, var(--ink) 16%, transparent);
   --page: min(1280px, calc(100vw - 96px));
-  --font-latin: var(--font-inter), Inter, Pretendard, "Pretendard Variable", SUIT, "Noto Sans KR", system-ui, sans-serif;
+  --font-inter: "Inter";
+  --font-unbounded: "Unbounded";
+  --font-latin: var(--font-inter), Pretendard, "Pretendard Variable", SUIT, "Noto Sans KR", system-ui, sans-serif;
   --font-korean: Pretendard, "Pretendard Variable", SUIT, "Noto Sans KR", system-ui, sans-serif;
   --star-field: url("data:image/svg+xml,%3Csvg width='920' height='620' viewBox='0 0 920 620' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='white' fill-opacity='.34'%3E%3Ccircle cx='38' cy='44' r='1'/%3E%3Ccircle cx='174' cy='92' r='.7'/%3E%3Ccircle cx='312' cy='31' r='.9'/%3E%3Ccircle cx='471' cy='128' r='.65'/%3E%3Ccircle cx='683' cy='54' r='.85'/%3E%3Ccircle cx='846' cy='143' r='.7'/%3E%3Ccircle cx='96' cy='252' r='.75'/%3E%3Ccircle cx='257' cy='341' r='1'/%3E%3Ccircle cx='418' cy='238' r='.65'/%3E%3Ccircle cx='608' cy='326' r='.8'/%3E%3Ccircle cx='797' cy='267' r='1'/%3E%3Ccircle cx='52' cy='503' r='.7'/%3E%3Ccircle cx='221' cy='558' r='.85'/%3E%3Ccircle cx='518' cy='487' r='.7'/%3E%3Ccircle cx='721' cy='541' r='.9'/%3E%3Ccircle cx='887' cy='436' r='.65'/%3E%3C/g%3E%3Cg fill='%2378a9ff' fill-opacity='.28'%3E%3Ccircle cx='122' cy='166' r='.75'/%3E%3Ccircle cx='356' cy='184' r='.65'/%3E%3Ccircle cx='562' cy='76' r='.8'/%3E%3Ccircle cx='744' cy='213' r='.65'/%3E%3Ccircle cx='184' cy='431' r='.8'/%3E%3Ccircle cx='397' cy='536' r='.7'/%3E%3Ccircle cx='651' cy='418' r='.75'/%3E%3Ccircle cx='832' cy='572' r='.65'/%3E%3C/g%3E%3C/svg%3E");
 }
