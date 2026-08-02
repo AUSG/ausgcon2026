@@ -5,7 +5,6 @@ export function SpeakersSection() {
     <section id="speakers" className="speakers content-section">
       <div className="container">
         <header className="speakers__heading">
-          <p>13 VOICES / 3 TRACKS</p>
           <h2>SMALL TALKS.<br /><em>BIG MOMENTUM.</em></h2>
           <span>현장에서 부딪혀 얻은 답과 다음 도전을 만드는 질문을 나눕니다.</span>
         </header>

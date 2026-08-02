@@ -3,7 +3,6 @@ export function VenueSection() {
     <section id="venue" className="venue content-section">
       <div className="container venue__grid">
         <div className="venue__copy">
-          <p className="eyebrow">VENUE</p>
           <h2>AWS Korea</h2>
           <p className="venue__city">Seoul,<br />Republic of Korea</p>
           <p>센터필드 EAST 18층 AWS Korea에서 만나요.</p>

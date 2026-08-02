@@ -26,7 +26,6 @@ export function ScheduleSection() {
                   role="cell"
                   style={{ gridColumn: "2 / -1", gridRow: rowIndex + 2 }}
                 >
-                  <span>{String(rowIndex + 1).padStart(2, "0")}</span>
                   <strong>{row.shared.title}</strong>
                   <small>{row.shared.speaker}</small>
                 </article>
@@ -40,7 +39,6 @@ export function ScheduleSection() {
                       style={{ gridColumn: trackIndex + 2, gridRow: rowIndex + 2 }}
                       key={track}
                     >
-                      <span>{track}</span>
                       <strong>{session?.title ?? "TBD"}</strong>
                       <small>{session?.speaker ?? "TBD"}</small>
                     </article>
@@ -56,7 +54,6 @@ export function ScheduleSection() {
               style={{ gridColumn: 5, gridRow: `${index === 0 ? 4 : 6} / span 2` }}
               key={session.time}
             >
-              <span>HANDS-ON 0{index + 1}</span>
               <time>{session.time}</time>
               <strong>{session.title}</strong>
               <small>{session.speaker}</small>
