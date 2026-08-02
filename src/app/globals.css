@@ -318,7 +318,7 @@ img {
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(4rem, 7.2vw, 7.7rem);
+  font-size: clamp(3.7rem, 6.4vw, 6.9rem);
   font-weight: 400;
   letter-spacing: -0.075em;
   line-height: 0.79;
@@ -355,7 +355,9 @@ img {
   margin-top: 34px;
   color: rgba(255, 255, 255, 0.68);
   font-family: var(--font-latin);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.55;
   letter-spacing: 0.08em;
 }
 
@@ -915,6 +917,7 @@ img {
 
 .schedule__heading h2 {
   margin: 0;
+  white-space: nowrap;
 }
 
 .speakers__heading h2 {
@@ -963,7 +966,8 @@ img {
   background: rgba(255, 255, 255, 0.035);
   padding: 12px 16px;
   color: rgba(255, 255, 255, 0.62);
-  font-size: 0.7rem;
+  font-family: var(--font-korean);
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-align: center;
@@ -1173,10 +1177,8 @@ img {
 }
 
 .speaker-card--duo {
-  border-color: rgba(183, 245, 0, 0.42);
-  background:
-    linear-gradient(120deg, rgba(183, 245, 0, 0.08), rgba(120, 169, 255, 0.08)),
-    rgba(255, 255, 255, 0.045);
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.045);
 }
 
 .speaker-card--duo .speaker-card__portrait strong {
@@ -1200,7 +1202,7 @@ img {
 }
 
 .speaker-card--duo .speaker-card__meta h3 {
-  color: var(--lime);
+  color: #f5f5f1;
   font-size: 1.2rem;
 }
 
@@ -1295,26 +1297,59 @@ img {
 }
 
 .venue__copy dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
   margin: 48px 0 0;
-  border-top: 1px solid var(--ink);
 }
 
 .venue__copy dl div {
+  position: relative;
   display: grid;
-  grid-template-columns: 110px 1fr;
-  border-bottom: 1px solid var(--line);
-  padding: 16px 0;
+  min-height: 168px;
+  align-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+}
+
+.venue__copy dl div::after {
+  position: absolute;
+  right: 14px;
+  bottom: -22px;
+  color: rgba(17, 17, 17, 0.045);
+  font-family: var(--font-unbounded), var(--font-latin);
+  font-size: 5.5rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.venue__copy dl div:first-child::after {
+  content: "01";
+}
+
+.venue__copy dl div:last-child::after {
+  content: "02";
 }
 
 .venue__copy dt {
+  position: relative;
+  z-index: 1;
   color: var(--muted);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
 }
 
 .venue__copy dd {
+  position: relative;
+  z-index: 1;
   margin: 0;
-  font-size: 0.86rem;
+  font-size: 0.92rem;
+  font-weight: 550;
+  line-height: 1.65;
 }
 
 .outline-button {
@@ -1697,6 +1732,14 @@ img {
   .venue__grid,
   .faq__grid {
     grid-template-columns: 1fr;
+  }
+
+  .venue__copy dl {
+    grid-template-columns: 1fr;
+  }
+
+  .venue__copy dl div {
+    min-height: 138px;
   }
 
   .content-heading h2,

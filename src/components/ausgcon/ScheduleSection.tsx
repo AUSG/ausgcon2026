@@ -8,8 +8,7 @@ export function ScheduleSection() {
     <section id="schedule" className="schedule content-section">
       <div className="container">
         <header className="schedule__heading">
-          <h2><span>ONE TIME.</span><em>THREE TRACKS.</em></h2>
-          <p>Cloud, Tech, Jump. 세 개의 트랙이 같은 시간 위에서 각자의 도전을 시작합니다.</p>
+          <h2>TIME TABLE</h2>
         </header>
         <div className="program-board" role="table" aria-label="AUSGCON 2026 프로그램 시간표">
           <div className="program-board__header" role="row">
