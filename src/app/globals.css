@@ -1086,6 +1086,7 @@ img {
   font-weight: 680;
   letter-spacing: -0.035em;
   line-height: 1.42;
+  white-space: pre-line;
 }
 
 .program-card small {
@@ -1138,7 +1139,7 @@ img {
 
 .program-card--shared strong {
   margin-top: 4px;
-  font-size: 1.1rem;
+  font-size: clamp(1.12rem, 1.48vw, 1.34rem);
   letter-spacing: 0.015em;
 }
 

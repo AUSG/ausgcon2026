@@ -48,12 +48,12 @@ export const timetable: TimetableRow[] = [
     sessions: [
       {
         track: "CLOUD",
-        title: "양자 중첩으로 미로 탈출 \n w/ Amazon Braket",
+        title: "양자 중첩으로 미로 탈출\nw/ Amazon Braket",
         speaker: "김민준",
       },
       {
         track: "TECH",
-        title: "RAG가 하는 거짓말, 어떻게 잡을 수 있을까?",
+        title: "RAG가 하는 거짓말,\n어떻게 잡을 수 있을까?",
         speaker: "김대현",
       },
       { track: "JUMP", title: "공진성의 마술쇼", speaker: "공진성" },
@@ -133,7 +133,7 @@ export const speakers: Speaker[] = [
   {
     name: "김민준",
     track: "CLOUD",
-    session: "양자 중첩으로 미로 탈출 w/ Amazon Braket",
+    session: "양자 중첩으로 미로 탈출\nw/ Amazon Braket",
     description:
       "AWS 양자 컴퓨팅 서비스와 간단한 문제를 풀며 양자컴퓨터를 가깝게 만납니다.",
     image: null,
@@ -141,7 +141,7 @@ export const speakers: Speaker[] = [
   {
     name: "김대현",
     track: "TECH",
-    session: "RAG가 하는 거짓말, 어떻게 잡을 수 있을까?",
+    session: "RAG가 하는 거짓말,\n어떻게 잡을 수 있을까?",
     description:
       "RAG의 환각을 발견하고 평가하는 방법과 Cloud에 구축한 검증 파이프라인을 공유합니다.",
     image: null,
