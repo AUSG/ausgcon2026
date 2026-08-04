@@ -72,7 +72,7 @@ export const timetable: TimetableRow[] = [
         title: "Node.js, Java, Go 동시성 비교하기",
         speaker: "이지호",
       },
-      { track: "JUMP", title: "TBD", speaker: "김보람" },
+      { track: "JUMP", title: "슬기로운 인턴생활", speaker: "김보람" },
     ],
   },
   {
@@ -119,7 +119,7 @@ export const timetable: TimetableRow[] = [
 export const handsOnSessions: HandsOnSession[] = [
   {
     time: "13:30 - 14:45",
-    title: "TBD",
+    title: "더 똑똑한 RAG 만들기: Vector RAG vs GraphRAG",
     speaker: "지현숙 & 장인호",
   },
   {
@@ -173,8 +173,9 @@ export const speakers: Speaker[] = [
   {
     name: "김보람",
     track: "JUMP",
-    session: "TBD",
-    description: "세션 상세 정보는 곧 공개됩니다.",
+    session: "슬기로운 인턴생활",
+    description:
+      "체험형 인턴에서 정규직 전환까지, 그 여정을 들려드립니다. 그리고 한 명의 개발자가 방향을 찾아가는 이야기를 나눠요.",
     image: null,
   },
   {
@@ -235,9 +236,9 @@ export const speakers: Speaker[] = [
   {
     name: "지현숙 · 장인호",
     track: "HANDS-ON",
-    session: "TBD",
+    session: "더 똑똑한 RAG 만들기: Vector RAG vs GraphRAG",
     description:
-      "두 연사자가 함께 진행하는 핸즈온 세션입니다. 상세 정보는 곧 공개됩니다.",
+      "같은 문서와 같은 질문인데, 왜 RAG의 답은 달라질까요? Amazon Bedrock Knowledge Bases와 Amazon Neptune Analytics를 활용해 Vector RAG와 GraphRAG를 직접 구축합니다. 의미적으로 가까운 문서를 찾는 방식과 문서 속 관계를 따라가는 방식을 동일한 데이터로 비교하며, 어떤 질문에서 두 RAG의 차이가 드러나는지 확인합니다.",
     image: null,
   },
   {
