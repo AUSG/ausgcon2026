@@ -23,6 +23,7 @@ export interface HandsOnSession {
 
 export interface Speaker {
   name: string;
+  affiliation: string;
   track: Track | "ALL" | "HANDS-ON";
   session: string;
   description: string;
@@ -132,6 +133,7 @@ export const handsOnSessions: HandsOnSession[] = [
 export const speakers: Speaker[] = [
   {
     name: "김민준",
+    affiliation: "AUSG 8기",
     track: "CLOUD",
     session: "양자 중첩으로 미로 탈출\nw/ Amazon Braket",
     description:
@@ -140,6 +142,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "김대현",
+    affiliation: "메가존소프트 / AUSG 9기",
     track: "TECH",
     session: "RAG가 하는 거짓말,\n어떻게 잡을 수 있을까?",
     description:
@@ -148,6 +151,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "공진성",
+    affiliation: "JIRO / AUSG 8기",
     track: "JUMP",
     session: "공진성의 마술쇼",
     description:
@@ -156,6 +160,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "이은지",
+    affiliation: "서울대학교 / AUSG 8기",
     track: "CLOUD",
     session: "Bedrock AgentCore로 멀티채널 SNS 에이전트 만들기",
     description:
@@ -164,6 +169,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "이지호",
+    affiliation: "당근 / AUSG 10기",
     track: "TECH",
     session: "Node.js, Java, Go 동시성 비교하기",
     description:
@@ -172,6 +178,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "김보람",
+    affiliation: "뱅크샐러드 / AUSG 9기",
     track: "JUMP",
     session: "슬기로운 인턴생활",
     description:
@@ -180,6 +187,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "배진수",
+    affiliation: "AUSG 4기",
     track: "CLOUD",
     session: "모노레포 쪼개고 배포하기: Monorepo on ECS",
     description:
@@ -188,6 +196,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "길상혁",
+    affiliation: "슈퍼진 / AUSG 8기",
     track: "TECH",
     session: "클로 야호~!",
     description:
@@ -196,6 +205,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "신현수",
+    affiliation: "당근 / AUSG 9기",
     track: "JUMP",
     session: "성장곡선과 행복곡선",
     description:
@@ -204,6 +214,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "강시온",
+    affiliation: "AUSG 6기",
     track: "CLOUD",
     session: "TBD",
     description: "세션 상세 정보는 곧 공개됩니다.",
@@ -211,6 +222,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "김수빈",
+    affiliation: "당근 / AUSG 6기",
     track: "TECH",
     session: "Agent와 일하기 위해 처음부터 다시 생각하기",
     description:
@@ -219,6 +231,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "김민태",
+    affiliation: "WoowaBros / AUSG 4기",
     track: "JUMP",
     session: "우리는 AI를 어떤 자세로 사용해야 할까?",
     description:
@@ -227,6 +240,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "최용호",
+    affiliation: "AWS",
     track: "ALL",
     session: "AI 시대에 알아야 할 AI 트렌드 총정리",
     description:
@@ -235,6 +249,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "지현숙 · 장인호",
+    affiliation: "AUSG 9기",
     track: "HANDS-ON",
     session: "더 똑똑한 RAG 만들기: Vector RAG vs GraphRAG",
     description:
@@ -243,6 +258,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "박상운",
+    affiliation: "메가존클라우드",
     track: "HANDS-ON",
     session: "Serverless Agentic AI 직접 구현하기",
     description:

@@ -9,6 +9,7 @@ type SessionTrack = Speaker["track"];
 interface SessionDetail {
   title: string;
   speaker: string;
+  affiliation?: string;
   track: SessionTrack;
   description: string;
   index: number;
@@ -41,12 +42,19 @@ function findSpeaker(name: string) {
   return speakers.find((speaker) => normalizeSpeakerName(speaker.name) === normalizedName);
 }
 
+function getSpeakerLabel(name: string) {
+  const speaker = findSpeaker(name);
+  const displayName = name.replace(/\s*[·&]\s*/g, ", ");
+  return speaker?.affiliation ? `${displayName} · ${speaker.affiliation}` : displayName;
+}
+
 function getSessionDetail(title: string, speakerName: string, fallbackTrack: SessionTrack): SessionDetail {
   const speaker = findSpeaker(speakerName);
 
   return {
     title,
     speaker: speakerName,
+    affiliation: speaker?.affiliation,
     track: speaker?.track ?? fallbackTrack,
     description: speaker?.description ?? "세션의 상세 내용은 곧 공개됩니다.",
     index: speaker ? speakers.indexOf(speaker) : 0,
@@ -124,7 +132,7 @@ export function ScheduleSection() {
                   onClick={(event) => openSession(event.currentTarget, row.shared!.title, row.shared!.speaker, "ALL")}
                   >
                     <strong>{row.shared.title}</strong>
-                    <small>{row.shared.speaker}</small>
+                    <small>{getSpeakerLabel(row.shared.speaker)}</small>
                 </button>
               ) : (
                 tracks.map((track, trackIndex) => {
@@ -142,7 +150,7 @@ export function ScheduleSection() {
                       key={track}
                     >
                       <strong>{title}</strong>
-                      <small>{speaker}</small>
+                      <small>{getSpeakerLabel(speaker)}</small>
                     </button>
                   );
                 })
@@ -161,7 +169,7 @@ export function ScheduleSection() {
             >
               <time>{session.time}</time>
               <strong>{session.title}</strong>
-              <small>{session.speaker}</small>
+              <small>{getSpeakerLabel(session.speaker)}</small>
             </button>
           ))}
         </div>
@@ -195,7 +203,7 @@ export function ScheduleSection() {
                     onClick={(event) => openSession(event.currentTarget, session.title, session.speaker, "HANDS-ON")}
                   >
                     <strong>{session.title}</strong>
-                    <small>{session.speaker}</small>
+                    <small>{getSpeakerLabel(session.speaker)}</small>
                   </button>
                 </div>
               ))
@@ -216,7 +224,7 @@ export function ScheduleSection() {
                       onClick={(event) => openSession(event.currentTarget, content.title, content.speaker, row.shared ? "ALL" : activeTrack)}
                     >
                       <strong>{content.title}</strong>
-                      <small>{content.speaker}</small>
+                      <small>{getSpeakerLabel(content.speaker)}</small>
                     </button>
                   </div>
                 );
@@ -252,7 +260,10 @@ export function ScheduleSection() {
             <div className="speaker-dialog__body">
               <span>{selectedSession.track}</span>
               <h3 id="schedule-dialog-title">{selectedSession.title}</h3>
-              <h4>{selectedSession.speaker}</h4>
+              <h4>
+                {selectedSession.speaker.replace(/\s*[·&]\s*/g, ", ")}
+                {selectedSession.affiliation ? ` (${selectedSession.affiliation})` : ""}
+              </h4>
               <p>{selectedSession.description}</p>
             </div>
           </div>
