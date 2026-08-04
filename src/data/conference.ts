@@ -260,7 +260,6 @@ export const speakers: Speaker[] = [
   {
     name: "최용호",
     affiliation: "AWS",
-    credential: "AWS 테크에반젤리스트",
     track: "ALL",
     session: "AI 시대에 알아야 할 AI 트렌드 총정리",
     description:
@@ -282,7 +281,6 @@ export const speakers: Speaker[] = [
   {
     name: "박상운",
     affiliation: "메가존클라우드",
-    credential: "AWS Serverless Hero",
     track: "HANDS-ON",
     session: "Serverless Agentic AI 직접 구현하기",
     description:

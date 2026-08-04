@@ -1857,7 +1857,7 @@ img {
   z-index: 2;
   top: 10px;
   left: 11px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -1873,7 +1873,7 @@ img {
 
 .mentor-card__body > span {
   color: #3977cc;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.13em;
 }
@@ -2515,14 +2515,13 @@ img {
   .narrative__inner,
   .narrative--jump,
   .narrative--jump .narrative__inner {
-    min-height: auto;
+    min-height: 72svh;
   }
 
   .narrative__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 54px 0 28px;
+    position: relative;
+    display: block;
+    padding: clamp(72px, 10svh, 96px) 0 48px;
   }
 
   .narrative__copy {
@@ -2543,16 +2542,19 @@ img {
   }
 
   .narrative__asset {
-    position: relative;
+    position: absolute;
     top: auto;
-    right: auto;
-    left: auto !important;
   }
 
   .narrative__asset--cloud {
-    width: 64%;
-    margin: -5% 0 -14% auto;
-    order: 3;
+    right: -10%;
+    bottom: -12%;
+    width: 78%;
+    margin: 0;
+  }
+
+  .narrative__asset--cloud img {
+    transform: scale(1.65);
   }
 
   .cloud-atmosphere {
@@ -2564,19 +2566,30 @@ img {
   }
 
   .narrative__inner--reverse .narrative__asset--tech {
-    order: 3;
-    width: 52%;
-    margin: -4% auto -10%;
+    left: -8% !important;
+    bottom: -16%;
+    width: 62%;
+    margin: 0;
+  }
+
+  .narrative__asset--tech img {
+    transform: scale(2);
   }
 
   .narrative__copy--tech {
-    order: 2;
+    width: 86%;
+    margin-left: auto;
   }
 
   .narrative__asset--jump {
-    width: 64%;
-    margin: -7% -2% -8% auto;
-    order: 3;
+    right: -12%;
+    bottom: -15%;
+    width: 78%;
+    margin: 0;
+  }
+
+  .narrative__asset--jump img {
+    transform: scale(1.7);
   }
 
   .journey-indicator {
@@ -2831,21 +2844,18 @@ img {
   }
 
   .speaker-dialog {
-    align-items: flex-end;
-    padding: 0;
+    align-items: center;
+    padding: 20px;
   }
 
   .speaker-dialog__panel {
     width: 100%;
-    max-height: 88svh;
+    max-height: 82svh;
     grid-template-columns: 84px minmax(0, 1fr);
     gap: 14px;
     overflow-y: auto;
-    border-right: 0;
-    border-bottom: 0;
-    border-left: 0;
-    border-radius: 24px 24px 0 0;
-    padding: 24px 18px calc(24px + env(safe-area-inset-bottom));
+    border-radius: 22px;
+    padding: 24px 18px;
   }
 
   .speaker-dialog__body {
