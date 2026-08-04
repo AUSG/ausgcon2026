@@ -22,6 +22,20 @@ export function AboutSection() {
             1개의 핸즈온, 1개의 멘토링 세션으로 구성되어 있습니다.
           </p>
         </div>
+        <ul className="about-brief__mobile-tracks" aria-label="AUSGCON 트랙">
+          <li data-track="cloud">
+            <span>01</span>
+            <strong>CLOUD</strong>
+          </li>
+          <li data-track="tech">
+            <span>02</span>
+            <strong>TECH</strong>
+          </li>
+          <li data-track="jump">
+            <span>03</span>
+            <strong>JUMP</strong>
+          </li>
+        </ul>
       </div>
     </section>
   );
