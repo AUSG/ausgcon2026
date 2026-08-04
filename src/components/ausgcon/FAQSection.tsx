@@ -11,8 +11,7 @@ export function FAQSection() {
     <section id="faq" className="faq content-section">
       <div className="container faq__grid">
         <div>
-          <p className="eyebrow">FAQ</p>
-          <h2>Questions,<br />answered.</h2>
+          <h2>FAQ</h2>
         </div>
         <div className="faq__list">
           {faqs.map((item, index) => {

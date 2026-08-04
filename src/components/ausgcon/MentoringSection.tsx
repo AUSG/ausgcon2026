@@ -18,7 +18,6 @@ export function MentoringSection() {
             <div>
               <p className="mentoring__tagline">당신의 다음 선택을 위한 45분의 1:1 대화.</p>
               <p className="mentoring__description">
-                <strong>1:1 · 45 MINUTES · RESERVATION ONLY</strong>
                 <span>
                   취업·이직을 준비하는 대학생과 1~3년 차 주니어 개발자를 위한 커리어 멘토링입니다.
                   이력서·포트폴리오 등 준비한 자료와 질문을 바탕으로 현재의 고민을 살펴보고, 앞으로의 준비 방향을 함께 정리합니다.

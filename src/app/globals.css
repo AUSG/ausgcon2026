@@ -1625,7 +1625,7 @@ img {
   display: block;
   margin-bottom: 34px;
   color: #3977cc;
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.16em;
 }
@@ -1666,12 +1666,6 @@ img {
   display: grid;
   gap: 12px;
   margin: 24px 0 0;
-}
-
-.mentoring__description strong {
-  color: #3977cc;
-  font-size: 0.76rem;
-  letter-spacing: 0.14em;
 }
 
 .mentoring__description span {
@@ -1732,7 +1726,8 @@ img {
   padding: 0 20px;
   color: var(--ink);
   font-family: var(--font-korean);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 .mentoring__apply span {
@@ -1862,7 +1857,7 @@ img {
   z-index: 2;
   top: 10px;
   left: 11px;
-  font-size: 0.54rem;
+  font-size: 0.72rem;
   font-weight: 700;
 }
 
@@ -1878,7 +1873,7 @@ img {
 
 .mentor-card__body > span {
   color: #3977cc;
-  font-size: 0.54rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.13em;
 }
@@ -1894,7 +1889,7 @@ img {
 
 .mentor-card__body p {
   margin: 18px 0 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 650;
 }
 
