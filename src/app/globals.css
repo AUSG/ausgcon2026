@@ -1962,16 +1962,17 @@ img {
   white-space: nowrap;
 }
 
+.venue.content-section {
+  padding-bottom: clamp(56px, 6vw, 96px);
+}
+
 .faq {
   margin-top: -1px;
   background: #f8fbfe;
 }
 
-.venue__city + p {
-  margin: 30px 0 0;
-  color: var(--muted);
-  font-size: 1.08rem;
-  line-height: 1.65;
+.faq.content-section {
+  padding-top: clamp(72px, 8vw, 120px);
 }
 
 .venue__copy dl {
@@ -2108,26 +2109,22 @@ img {
 }
 
 .sponsor-strip__slot {
-  display: flex;
+  position: relative;
+  display: block;
   min-height: 76px;
-  align-items: center;
-  justify-content: space-between;
+  overflow: hidden;
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.58);
-  padding: 14px;
+  background: #fff;
 }
 
-.sponsor-strip__slot span {
-  color: rgba(17, 17, 17, 0.38);
-  font-size: 0.52rem;
-  font-weight: 700;
+.sponsor-strip__slot img {
+  object-fit: contain;
+  padding: 20px 18px;
 }
 
-.sponsor-strip__slot strong {
-  color: rgba(17, 17, 17, 0.34);
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
+.sponsor-strip__slot--aws img {
+  padding: 13px 48px;
 }
 
 .faq__grid {

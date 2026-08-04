@@ -1,3 +1,12 @@
+import Image from "next/image";
+
+const sponsors = [
+  { name: "Amazon Web Services", logo: "/assets/ausgcon/sponsors/aws.svg", className: "aws" },
+  { name: "AWSKRUG", logo: "/assets/ausgcon/sponsors/awskrug.svg", className: "awskrug" },
+  { name: "Lablup", logo: "/assets/ausgcon/sponsors/lablup.png", className: "lablup" },
+  { name: "한빛미디어", logo: "/assets/ausgcon/sponsors/hanbitmedia.png", className: "hanbit" },
+] as const;
+
 export function VenueSection() {
   return (
     <section id="venue" className="venue content-section">
@@ -5,7 +14,6 @@ export function VenueSection() {
         <div className="venue__copy">
           <h2>MAP</h2>
           <p className="venue__city">CENTERFIELD EAST 18F</p>
-          <p>CENTERFIELD EAST 18층에서 만나요.</p>
           <dl>
             <div><dt>ADDRESS</dt><dd>서울 강남구 테헤란로 231<br />CENTERFIELD EAST, 18층</dd></div>
             <div><dt>TRANSIT</dt><dd>역삼역 8번 출구에서 도보 8분</dd></div>
@@ -25,16 +33,15 @@ export function VenueSection() {
           >GOOGLE MAPS <span>↗</span></a>
         </div>
       </div>
-      <div className="container sponsor-strip" aria-label="AUSGCON 2026 후원사">
+      <div id="sponsors" className="container sponsor-strip" aria-label="AUSGCON 2026 후원사">
         <div className="sponsor-strip__heading">
           <span>WITH SUPPORT FROM</span>
           <h3>SPONSORS</h3>
         </div>
         <div className="sponsor-strip__grid">
-          {Array.from({ length: 4 }, (_, index) => (
-            <div className="sponsor-strip__slot" key={index}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>COMING SOON</strong>
+          {sponsors.map((sponsor) => (
+            <div className={`sponsor-strip__slot sponsor-strip__slot--${sponsor.className}`} key={sponsor.name}>
+              <Image src={sponsor.logo} alt={sponsor.name} fill sizes="(max-width: 768px) 45vw, 18vw" />
             </div>
           ))}
         </div>
