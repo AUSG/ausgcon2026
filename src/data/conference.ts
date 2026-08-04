@@ -11,6 +11,10 @@ export interface TimetableRow {
   shared?: {
     title: string;
     speaker: string;
+    image?: string;
+    imageAlt?: string;
+    imageKind?: "keyring" | "logo";
+    description?: string;
   };
   sessions?: TimetableSession[];
 }
@@ -24,10 +28,11 @@ export interface HandsOnSession {
 export interface Speaker {
   name: string;
   affiliation: string;
+  credential?: string;
   track: Track | "ALL" | "HANDS-ON";
   session: string;
   description: string;
-  image: string | null;
+  image: string | string[] | null;
 }
 
 export interface FAQ {
@@ -38,11 +43,25 @@ export interface FAQ {
 export const timetable: TimetableRow[] = [
   {
     time: "12:30 - 13:00",
-    shared: { title: "CHECK-IN", speaker: "참가자 입장" },
+    shared: {
+      title: "CHECK-IN",
+      speaker: "참가자 입장",
+      image: "/assets/ausgcon/keyring.png",
+      imageAlt: "AUSGCON 키링",
+      imageKind: "keyring",
+      description: "등록 확인 후 입장 안내를 받고 AUSGCON 2026을 시작합니다.",
+    },
   },
   {
     time: "13:00 - 13:20",
-    shared: { title: "OPENING", speaker: "행사 및 스폰서 소개" },
+    shared: {
+      title: "OPENING",
+      speaker: "행사 및 스폰서 소개",
+      image: "/assets/ausgcon/sponsor-ausg.png",
+      imageAlt: "AUSG 로고",
+      imageKind: "logo",
+      description: "AUSGCON 2026 행사와 함께해 주신 스폰서를 소개합니다.",
+    },
   },
   {
     time: "13:30 - 14:00",
@@ -113,7 +132,7 @@ export const timetable: TimetableRow[] = [
   },
   {
     time: "17:20 - 17:50",
-    shared: { title: "CLOSING", speaker: "AUSG Organizer" },
+    shared: { title: "CLOSING", speaker: "" },
   },
 ];
 
@@ -138,7 +157,7 @@ export const speakers: Speaker[] = [
     session: "양자 중첩으로 미로 탈출\nw/ Amazon Braket",
     description:
       "AWS 양자 컴퓨팅 서비스와 간단한 문제를 풀며 양자컴퓨터를 가깝게 만납니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/kim-minjun.jpg",
   },
   {
     name: "김대현",
@@ -147,7 +166,7 @@ export const speakers: Speaker[] = [
     session: "RAG가 하는 거짓말,\n어떻게 잡을 수 있을까?",
     description:
       "RAG의 환각을 발견하고 평가하는 방법과 Cloud에 구축한 검증 파이프라인을 공유합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/kim-daehyun.jpg",
   },
   {
     name: "공진성",
@@ -156,7 +175,7 @@ export const speakers: Speaker[] = [
     session: "공진성의 마술쇼",
     description:
       "반복된 실패를 발판 삼아 취업까지 이어 간 경험과 자신만의 카드를 발견한 이야기를 나눕니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/gong-jinseong.jpg",
   },
   {
     name: "이은지",
@@ -165,7 +184,7 @@ export const speakers: Speaker[] = [
     session: "Bedrock AgentCore로 멀티채널 SNS 에이전트 만들기",
     description:
       "채널별 톤에 맞는 SNS 콘텐츠를 생성하고 게시하는 자동화 에이전트 개발 경험을 소개합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/lee-eunji.jpg",
   },
   {
     name: "이지호",
@@ -174,7 +193,7 @@ export const speakers: Speaker[] = [
     session: "Node.js, Java, Go 동시성 비교하기",
     description:
       "동시성이 필요한 하나의 예제를 세 언어로 구현하며 각 언어의 철학을 비교합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/lee-jiho.jpg",
   },
   {
     name: "김보람",
@@ -183,7 +202,7 @@ export const speakers: Speaker[] = [
     session: "슬기로운 인턴생활",
     description:
       "체험형 인턴에서 정규직 전환까지, 그 여정을 들려드립니다. 그리고 한 명의 개발자가 방향을 찾아가는 이야기를 나눠요.",
-    image: null,
+    image: "/assets/ausgcon/speakers/kim-boram.jpg",
   },
   {
     name: "배진수",
@@ -192,7 +211,7 @@ export const speakers: Speaker[] = [
     session: "모노레포 쪼개고 배포하기: Monorepo on ECS",
     description:
       "Amazon ECS에서 모노레포를 선택적으로 빌드하고 배포하는 전략과 주의점을 살펴봅니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/bae-jinsu.jpg",
   },
   {
     name: "길상혁",
@@ -201,7 +220,7 @@ export const speakers: Speaker[] = [
     session: "클로 야호~!",
     description:
       "Claude를 더 쉽고 친숙하게 활용할 수 있도록 실제 사용 경험을 가볍게 공유합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/gil-sanghyeok.jpg",
   },
   {
     name: "신현수",
@@ -210,7 +229,7 @@ export const speakers: Speaker[] = [
     session: "성장곡선과 행복곡선",
     description:
       "재미로 시작한 취미가 업이 되기까지, 대학생 엔지니어의 성장과 행복에 대한 생각을 나눕니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/shin-hyeonsu.jpg",
   },
   {
     name: "강시온",
@@ -227,7 +246,7 @@ export const speakers: Speaker[] = [
     session: "Agent와 일하기 위해 처음부터 다시 생각하기",
     description:
       "AWS와 Kiro로 Agent의 실행 환경, 도구, 개선과 검증 루프를 다시 만든 경험을 공유합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/kim-subin.jpg",
   },
   {
     name: "김민태",
@@ -236,16 +255,17 @@ export const speakers: Speaker[] = [
     session: "우리는 AI를 어떤 자세로 사용해야 할까?",
     description:
       "AI 시대의 엔지니어가 대체에 대한 불안을 넘어 어떤 태도를 취해야 할지 함께 질문합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/kim-mintae.jpg",
   },
   {
     name: "최용호",
     affiliation: "AWS",
+    credential: "AWS 테크에반젤리스트",
     track: "ALL",
     session: "AI 시대에 알아야 할 AI 트렌드 총정리",
     description:
       "AI 코딩 에이전트와 MCP, 하네스 엔지니어링부터 루프 엔지니어링까지의 흐름을 정리합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/choi-yongho.jpg",
   },
   {
     name: "지현숙 · 장인호",
@@ -254,16 +274,20 @@ export const speakers: Speaker[] = [
     session: "더 똑똑한 RAG 만들기: Vector RAG vs GraphRAG",
     description:
       "같은 문서와 같은 질문인데, 왜 RAG의 답은 달라질까요? Amazon Bedrock Knowledge Bases와 Amazon Neptune Analytics를 활용해 Vector RAG와 GraphRAG를 직접 구축합니다. 의미적으로 가까운 문서를 찾는 방식과 문서 속 관계를 따라가는 방식을 동일한 데이터로 비교하며, 어떤 질문에서 두 RAG의 차이가 드러나는지 확인합니다.",
-    image: null,
+    image: [
+      "/assets/ausgcon/speakers/ji-hyeonsuk.jpg",
+      "/assets/ausgcon/speakers/jang-inho.jpg",
+    ],
   },
   {
     name: "박상운",
     affiliation: "메가존클라우드",
+    credential: "AWS Serverless Hero",
     track: "HANDS-ON",
     session: "Serverless Agentic AI 직접 구현하기",
     description:
       "직접 구현하며 Serverless Agentic AI의 구성과 실행 흐름을 경험합니다.",
-    image: null,
+    image: "/assets/ausgcon/speakers/park-sangwoon.jpg",
   },
 ];
 

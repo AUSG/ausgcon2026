@@ -45,7 +45,7 @@ export function HeroSection() {
           <p className="hero__subtitle">Dive into Tech,<br />Jump into Future</p>
           <div className="hero__meta">
             <span>2026.09.05.SAT 1PM - 6PM</span>
-            <span>AWS Korea CENTERFIELD</span>
+            <span>CENTERFIELD EAST 18F</span>
           </div>
           <div className="hero__actions">
             <a

@@ -1,6 +1,8 @@
 "use client";
 
 import { handsOnSessions, speakers, timetable, type Speaker, type Track } from "@/data/conference";
+import { SpeakerPortrait } from "@/components/ausgcon/SpeakerPortrait";
+import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 type MobileTrack = Track | "HANDS-ON";
@@ -13,7 +15,12 @@ interface SessionDetail {
   track: SessionTrack;
   description: string;
   index: number;
+  image?: string;
+  imageAlt?: string;
+  imageKind?: "keyring" | "logo";
 }
+
+type SharedSession = NonNullable<(typeof timetable)[number]["shared"]>;
 
 const tracks: Track[] = ["CLOUD", "TECH", "JUMP"];
 const mobileTracks: MobileTrack[] = [...tracks, "HANDS-ON"];
@@ -48,7 +55,12 @@ function getSpeakerLabel(name: string) {
   return speaker?.affiliation ? `${displayName} · ${speaker.affiliation}` : displayName;
 }
 
-function getSessionDetail(title: string, speakerName: string, fallbackTrack: SessionTrack): SessionDetail {
+function getSessionDetail(
+  title: string,
+  speakerName: string,
+  fallbackTrack: SessionTrack,
+  sharedSession?: SharedSession,
+): SessionDetail {
   const speaker = findSpeaker(speakerName);
 
   return {
@@ -56,8 +68,11 @@ function getSessionDetail(title: string, speakerName: string, fallbackTrack: Ses
     speaker: speakerName,
     affiliation: speaker?.affiliation,
     track: speaker?.track ?? fallbackTrack,
-    description: speaker?.description ?? "세션의 상세 내용은 곧 공개됩니다.",
+    description: sharedSession?.description ?? speaker?.description ?? "세션의 상세 내용은 곧 공개됩니다.",
     index: speaker ? speakers.indexOf(speaker) : 0,
+    image: sharedSession?.image,
+    imageAlt: sharedSession?.imageAlt,
+    imageKind: sharedSession?.imageKind,
   };
 }
 
@@ -78,9 +93,10 @@ export function ScheduleSection() {
     title: string,
     speaker: string,
     track: SessionTrack,
+    sharedSession?: SharedSession,
   ) => {
     triggerRef.current = trigger;
-    setSelectedSession(getSessionDetail(title, speaker, track));
+    setSelectedSession(getSessionDetail(title, speaker, track, sharedSession));
   };
 
   const closeDialog = () => {
@@ -106,6 +122,8 @@ export function ScheduleSection() {
     };
   }, [selectedSession]);
 
+  const selectedSpeakerData = selectedSession ? findSpeaker(selectedSession.speaker) : undefined;
+
   return (
     <section id="schedule" className="schedule content-section">
       <div className="container">
@@ -127,12 +145,13 @@ export function ScheduleSection() {
                   type="button"
                   className="program-card program-card--shared"
                   role="cell"
-                  aria-label={`세션 상세 보기: ${row.shared.title}`}
+                  aria-label={row.shared.speaker ? `세션 상세 보기: ${row.shared.title}` : row.shared.title}
                   style={{ gridColumn: overlapsHandsOn(row.time) ? "2 / 5" : "2 / -1", gridRow: rowIndex + 2 }}
-                  onClick={(event) => openSession(event.currentTarget, row.shared!.title, row.shared!.speaker, "ALL")}
+                  onClick={(event) => openSession(event.currentTarget, row.shared!.title, row.shared!.speaker, "ALL", row.shared)}
+                  disabled={!row.shared.speaker}
                   >
-                    <strong>{row.shared.title}</strong>
-                    <small>{getSpeakerLabel(row.shared.speaker)}</small>
+                  <strong>{row.shared.title}</strong>
+                  {row.shared.speaker && <small>{getSpeakerLabel(row.shared.speaker)}</small>}
                 </button>
               ) : (
                 tracks.map((track, trackIndex) => {
@@ -221,10 +240,10 @@ export function ScheduleSection() {
                       type="button"
                       className={`program-card program-card--${row.shared ? "shared" : activeTrack.toLowerCase()}`}
                       aria-label={`세션 상세 보기: ${content.title}`}
-                      onClick={(event) => openSession(event.currentTarget, content.title, content.speaker, row.shared ? "ALL" : activeTrack)}
+                      onClick={(event) => openSession(event.currentTarget, content.title, content.speaker, row.shared ? "ALL" : activeTrack, row.shared)}
                     >
                       <strong>{content.title}</strong>
-                      <small>{getSpeakerLabel(content.speaker)}</small>
+                      {content.speaker && <small>{getSpeakerLabel(content.speaker)}</small>}
                     </button>
                   </div>
                 );
@@ -253,17 +272,33 @@ export function ScheduleSection() {
               <span />
               <span />
             </button>
-            <div className={`speaker-dialog__portrait speaker-card__portrait--${selectedSession.track.toLowerCase()}`}>
-              <span>{String(selectedSession.index + 1).padStart(2, "0")}</span>
-              <strong>{getSpeakerMark(selectedSession.speaker)}</strong>
-            </div>
+            {selectedSession.image ? (
+              <div className={`speaker-dialog__portrait speaker-dialog__session-visual speaker-dialog__session-visual--${selectedSession.imageKind ?? "logo"}`}>
+                <Image
+                  src={selectedSession.image}
+                  alt={selectedSession.imageAlt ?? ""}
+                  fill
+                  sizes="148px"
+                />
+              </div>
+            ) : selectedSpeakerData ? (
+              <SpeakerPortrait speaker={selectedSpeakerData} index={selectedSession.index} variant="dialog" />
+            ) : (
+              <div className={`speaker-dialog__portrait speaker-card__portrait--${selectedSession.track.toLowerCase()}`}>
+                <span>{String(selectedSession.index + 1).padStart(2, "0")}</span>
+                <strong>{getSpeakerMark(selectedSession.speaker)}</strong>
+              </div>
+            )}
             <div className="speaker-dialog__body">
               <span>{selectedSession.track}</span>
               <h3 id="schedule-dialog-title">{selectedSession.title}</h3>
               <h4>
                 {selectedSession.speaker.replace(/\s*[·&]\s*/g, ", ")}
-                {selectedSession.affiliation ? ` (${selectedSession.affiliation})` : ""}
+                {selectedSession.affiliation ? ` · ${selectedSession.affiliation}` : ""}
               </h4>
+              {selectedSpeakerData?.credential && (
+                <small className="speaker-dialog__credential">{selectedSpeakerData.credential}</small>
+              )}
               <p>{selectedSession.description}</p>
             </div>
           </div>

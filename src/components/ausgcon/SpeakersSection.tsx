@@ -1,6 +1,7 @@
 "use client";
 
 import { speakers, type Speaker } from "@/data/conference";
+import { SpeakerPortrait } from "@/components/ausgcon/SpeakerPortrait";
 import { useEffect, useRef, useState } from "react";
 
 interface SelectedSpeaker {
@@ -58,15 +59,13 @@ export function SpeakersSection() {
                 }}
                 key={speaker.name}
               >
-                <div className={`speaker-card__portrait speaker-card__portrait--${speaker.track.toLowerCase()}`} aria-label={`${speaker.name} 프로필 이미지 준비 중`}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{isDuo ? "지 · 장" : speaker.name.slice(0, 1)}</strong>
-                </div>
+                <SpeakerPortrait speaker={speaker} index={index} />
                 <div className="speaker-card__body">
                   <div className="speaker-card__meta">
                     <h3>{speaker.name}</h3>
                     <span>{speaker.track}</span>
                   </div>
+                  {speaker.credential && <small className="speaker-card__credential">{speaker.credential}</small>}
                   <h4>{speaker.session}</h4>
                   <p>{speaker.description}</p>
                 </div>
@@ -95,13 +94,13 @@ export function SpeakersSection() {
               <span />
               <span />
             </button>
-            <div className={`speaker-dialog__portrait speaker-card__portrait--${selectedSpeaker.speaker.track.toLowerCase()}`}>
-              <span>{String(selectedSpeaker.index + 1).padStart(2, "0")}</span>
-              <strong>{selectedSpeaker.speaker.name.includes(" · ") ? "지 · 장" : selectedSpeaker.speaker.name.slice(0, 1)}</strong>
-            </div>
+            <SpeakerPortrait speaker={selectedSpeaker.speaker} index={selectedSpeaker.index} variant="dialog" />
             <div className="speaker-dialog__body">
               <span>{selectedSpeaker.speaker.track}</span>
               <h3 id="speaker-dialog-title">{selectedSpeaker.speaker.name}</h3>
+              {selectedSpeaker.speaker.credential && (
+                <small className="speaker-dialog__credential">{selectedSpeaker.speaker.credential}</small>
+              )}
               <h4>{selectedSpeaker.speaker.session}</h4>
               <p>{selectedSpeaker.speaker.description}</p>
             </div>
