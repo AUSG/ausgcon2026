@@ -228,7 +228,7 @@ export const speakers: Speaker[] = [
     track: "JUMP",
     session: "성장곡선과 행복곡선",
     description:
-      "재미로 시작한 취미가 업이 되기까지, 대학생 엔지니어의 성장과 행복에 대한 생각을 나눕니다.",
+      "재밌어서 시작했던 취미가 업이 되기까지, 대학생이지만 엔지니어로 살고 있는 지금의 제 이야기와 생각들을 가볍게 나눕니다.",
     image: "/assets/ausgcon/speakers/shin-hyeonsu.jpg",
   },
   {
