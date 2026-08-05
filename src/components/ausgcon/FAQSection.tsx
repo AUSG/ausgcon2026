@@ -40,7 +40,7 @@ export function FAQSection() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.28 }}
                     >
-                      <p>{item.answer}</p>
+                      <p style={{ whiteSpace: "pre-line" }}>{item.answer}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
