@@ -156,7 +156,7 @@ export const speakers: Speaker[] = [
     track: "CLOUD",
     session: "양자 중첩으로 미로 탈출\nw/ Amazon Braket",
     description:
-      "AWS 양자 컴퓨팅 서비스와 간단한 문제를 풀며 양자컴퓨터를 가깝게 만납니다.",
+      "AWS의 양자 컴퓨팅 서비스와 함께 간단한 문제를 풀어보며, 양자컴퓨터와 조금은 친해져 봅니다.",
     image: "/assets/ausgcon/speakers/kim-minjun.jpg",
   },
   {
