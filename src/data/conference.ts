@@ -118,7 +118,7 @@ export const timetable: TimetableRow[] = [
       },
       {
         track: "JUMP",
-        title: "우리는 AI를 어떤 자세로 사용해야 할까?",
+        title: "AI가 개발 다 하는데, 저 뽑힐 수 있나요?",
         speaker: "김민태",
       },
     ],
@@ -252,7 +252,7 @@ export const speakers: Speaker[] = [
     name: "김민태",
     affiliation: "WoowaBros / AUSG 4기",
     track: "JUMP",
-    session: "우리는 AI를 어떤 자세로 사용해야 할까?",
+    session: "AI가 개발 다 하는데, 저 뽑힐 수 있나요?",
     description:
       "AI 시대의 엔지니어가 대체에 대한 불안을 넘어 어떤 태도를 취해야 할지 함께 질문합니다.",
     image: "/assets/ausgcon/speakers/kim-mintae.jpg",
