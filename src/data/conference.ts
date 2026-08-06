@@ -113,7 +113,7 @@ export const timetable: TimetableRow[] = [
       { track: "CLOUD", title: "TBD", speaker: "강시온" },
       {
         track: "TECH",
-        title: "Agent와 일하기 위해 처음부터 다시 생각하기",
+        title: "Agent와 함께 일하기 위해 처음부터 다시 생각하기 (on AWS, with Kiro)",
         speaker: "김수빈",
       },
       {
@@ -165,7 +165,7 @@ export const speakers: Speaker[] = [
     track: "TECH",
     session: "RAG가 하는 거짓말,\n어떻게 잡을 수 있을까?",
     description:
-      "RAG의 환각을 발견하고 평가하는 방법과 Cloud에 구축한 검증 파이프라인을 공유합니다.",
+      "LLM에게 질문하면 그럴듯한 답변이 돌아옵니다. 근데 그 답변이 정말 맞는 건지, Hallucination인지 어떻게 확인하시나요? 이래서 우리는 RAG를 사용하지만, RAG도 검색한 문서를 무시, 없는 내용을 지어내거나, 출처를 잘못 인용하기도 합니다. 그럼 이 답변, 진짜 믿어도 될까요? 한번 Hallucination을 어떻게 잡을 수 있는지 다양한 평가 기법과 파이프라인을 Cloud에 올려 구축한 경험을 한번 공유해 보고자 합니다.",
     image: "/assets/ausgcon/speakers/kim-daehyun.jpg",
   },
   {
@@ -174,7 +174,7 @@ export const speakers: Speaker[] = [
     track: "JUMP",
     session: "공진성의 마술쇼",
     description:
-      "반복된 실패를 발판 삼아 취업까지 이어 간 경험과 자신만의 카드를 발견한 이야기를 나눕니다.",
+      "맨날 실패했던 사람이, 그 실패를 통해 취업한 이야기를 합니다.\n스스로 좋은 카드가 없다고 생각하시나요?",
     image: "/assets/ausgcon/speakers/gong-jinseong.jpg",
   },
   {
@@ -183,7 +183,7 @@ export const speakers: Speaker[] = [
     track: "CLOUD",
     session: "Bedrock AgentCore로 멀티채널 SNS 에이전트 만들기",
     description:
-      "채널별 톤에 맞는 SNS 콘텐츠를 생성하고 게시하는 자동화 에이전트 개발 경험을 소개합니다.",
+      "Amazon Bedrock AgentCore(Runtime·Gateway·Memory)와 Knowledge Base(S3 Vectors)를 활용해, 행사명·스폰서·해시태그 등 필수 포함 문구를 입력받아 SNS 게시글 초안을 생성하고, 사용자 컨펌을 거쳐 링크드인·인스타그램·슬랙 각 채널의 톤에 맞게 개별적으로 변환·게시하는 SNS 콘텐츠 반복작업 자동화 에이전트 개발 경험을 발표하고자 합니다.",
     image: "/assets/ausgcon/speakers/lee-eunji.jpg",
   },
   {
@@ -192,7 +192,7 @@ export const speakers: Speaker[] = [
     track: "TECH",
     session: "Node.js, Java, Go 동시성 비교하기",
     description:
-      "동시성이 필요한 하나의 예제를 세 언어로 구현하며 각 언어의 철학을 비교합니다.",
+      "AI한테 시키면 어떤 언어로든 코드가 나오는 시대입니다. 그럼 이제 언어를 안다는 건 뭘까요? 동시성이 필요한 간단한 예제 하나를 세 언어로 구현해보며, 각 언어가 어떤 철학을 가지고 있는지 비교해보려 합니다.",
     image: "/assets/ausgcon/speakers/lee-jiho.jpg",
   },
   {
@@ -210,7 +210,7 @@ export const speakers: Speaker[] = [
     track: "CLOUD",
     session: "모노레포 쪼개고 배포하기: Monorepo on ECS",
     description:
-      "Amazon ECS에서 모노레포를 선택적으로 빌드하고 배포하는 전략과 주의점을 살펴봅니다.",
+      "최근 AI 덕분에 엔지니어 한 명이 감당할 수 있는 업무 범위가 늘어났고, 모노레포 채택도 그에 따라 꽤 늘었습니다. 다만 모노레포를 배포하는 일은 여전히 그리 간단하지는 않습니다. 이 세션에서는 Amazon ECS 위에 모노레포를 배포할 때 주의사항과 큰 틀에서의 전략을 살펴봅니다. 모노레포에서 어떤 부분을 배포할 것인지, 그리고 어떻게 빌드할 것인지에 중점을 둡니다.",
     image: "/assets/ausgcon/speakers/bae-jinsu.jpg",
   },
   {
@@ -218,8 +218,7 @@ export const speakers: Speaker[] = [
     affiliation: "슈퍼진 / AUSG 8기",
     track: "TECH",
     session: "클로 야호~!",
-    description:
-      "Claude를 더 쉽고 친숙하게 활용할 수 있도록 실제 사용 경험을 가볍게 공유합니다.",
+    description: "클로드 안녕~ 이 시간 이후로 클로드가 쉽게 느껴집니다",
     image: "/assets/ausgcon/speakers/gil-sanghyeok.jpg",
   },
   {
@@ -228,7 +227,7 @@ export const speakers: Speaker[] = [
     track: "JUMP",
     session: "성장곡선과 행복곡선",
     description:
-      "재밌어서 시작했던 취미가 업이 되기까지, 대학생이지만 엔지니어로 살고 있는 지금의 제 이야기와 생각들을 가볍게 나눕니다.",
+      "순수하게 재밌어서 시작했던 취미가 업이 되기까지, 지금은 대학생이지만 엔지니어로 살고 있는 저의 몇 가지 이야기와 생각들을 가볍게 나누어요.",
     image: "/assets/ausgcon/speakers/shin-hyeonsu.jpg",
   },
   {
@@ -243,9 +242,9 @@ export const speakers: Speaker[] = [
     name: "김수빈",
     affiliation: "당근 / AUSG 6기",
     track: "TECH",
-    session: "Agent와 일하기 위해 처음부터 다시 생각하기",
+    session: "Agent와 함께 일하기 위해 처음부터 다시 생각하기 (on AWS, with Kiro)",
     description:
-      "AWS와 Kiro로 Agent의 실행 환경, 도구, 개선과 검증 루프를 다시 만든 경험을 공유합니다.",
+      "AWS 환경에서 Agent에게 일을 맡기기 위해 환경부터 다시 만들게 되었습니다. 실행 환경과 도구, 개선, 검증 루프를 새롭게 다시 만든 경험을 공유합니다.",
     image: "/assets/ausgcon/speakers/kim-subin.jpg",
   },
   {
@@ -254,7 +253,7 @@ export const speakers: Speaker[] = [
     track: "JUMP",
     session: "AI가 개발 다 하는데, 저 뽑힐 수 있나요?",
     description:
-      "AI 시대의 엔지니어가 대체에 대한 불안을 넘어 어떤 태도를 취해야 할지 함께 질문합니다.",
+      "우리는 AI를 사용할 때 대체될 수 있는가? 라는 고민을 많이 합니다. 모든 엔지니어가 이런 고민을 할 때 어떤 자세를 취하는 것이 좋을까요?",
     image: "/assets/ausgcon/speakers/kim-mintae.jpg",
   },
   {
@@ -263,7 +262,7 @@ export const speakers: Speaker[] = [
     track: "ALL",
     session: "AI 시대에 알아야 할 AI 트렌드 총정리",
     description:
-      "AI 코딩 에이전트와 MCP, 하네스 엔지니어링부터 루프 엔지니어링까지의 흐름을 정리합니다.",
+      "AI 코딩 도구는 개발자들에게 있어서 더 이상 선택이 아닌 일상이 되었습니다. 이러한 변화 속에서 개발자들은 불안합니다. \"AI가 내 일을 대체하는 건 아닐까?\" \"지금 배우는 기술이 내년에도 유효할까?\"\n이 발표에서는 AI 코딩 에이전트의 발전과 MCP 생태계의 폭발적 성장, 하네스 엔지니어링을 거쳐 루프 엔지니어링까지 변화하고 있는 트렌드를 함께 정리해 보고, 뒤처지지 않는 개발자가 되기 위한 기반을 다지는 시간을 갖고자 합니다.",
     image: "/assets/ausgcon/speakers/choi-yongho.jpg",
   },
   {
