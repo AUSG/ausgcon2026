@@ -183,7 +183,7 @@ export const speakers: Speaker[] = [
     track: "CLOUD",
     session: "Bedrock AgentCore로 멀티채널 SNS 에이전트 만들기",
     description:
-      "Amazon Bedrock AgentCore(Runtime·Gateway·Memory)와 Knowledge Base(S3 Vectors)를 활용해, 행사명·스폰서·해시태그 등 필수 포함 문구를 입력받아 SNS 게시글 초안을 생성하고, 사용자 컨펌을 거쳐 링크드인·인스타그램·슬랙 각 채널의 톤에 맞게 개별적으로 변환·게시하는 SNS 콘텐츠 반복작업 자동화 에이전트 개발 경험을 발표하고자 합니다.",
+      "Amazon Bedrock AgentCore(Runtime·Gateway·Memory)를 활용해, 행사명·스폰서·해시태그 등 필수 포함 문구를 입력받아 SNS 게시글 초안을 생성하고, 사용자 컨펌을 거쳐 링크드인·인스타그램·슬랙 각 채널의 톤에 맞게 개별적으로 변환·게시하는 SNS 콘텐츠 반복작업 자동화 에이전트 개발 경험을 발표하고자 합니다.",
     image: "/assets/ausgcon/speakers/lee-eunji.jpg",
   },
   {
