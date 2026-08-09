@@ -9,7 +9,13 @@ type Mentor = {
 };
 
 const mentors: readonly Mentor[] = [
-  { name: "우수연", company: "IBM", level: "SENIOR", image: "/assets/ausgcon/mentors/woo-sooyeon.jpg" },
+  {
+    name: "우수연",
+    company: "IBM",
+    level: "SENIOR",
+    image: "/assets/ausgcon/mentors/woo-sooyeon.jpg",
+    keywords: ["Architect", "Agentic AI", "LLMOps", "Cloud", "Infra"],
+  },
   {
     name: "문성혁",
     company: "쿠팡",
