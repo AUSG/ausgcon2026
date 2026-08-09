@@ -914,13 +914,25 @@ img {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: #000;
+  background:
+    linear-gradient(to bottom, var(--night) 0%, var(--night) 14%, transparent 30%),
+    radial-gradient(circle at 12% 28%, rgba(183, 245, 0, 0.08), transparent 22%),
+    radial-gradient(circle at 86% 46%, rgba(96, 145, 255, 0.1), transparent 28%),
+    var(--night);
   color: #f5f5f1;
 }
 
-.schedule::before,
-.schedule::after {
-  display: none;
+.schedule::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    var(--star-field) 0 0 / 780px 520px fixed,
+    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.025), transparent 34%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 100%);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .speakers::before {
