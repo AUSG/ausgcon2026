@@ -110,7 +110,7 @@ export const timetable: TimetableRow[] = [
   {
     time: "15:55 - 16:25",
     sessions: [
-      { track: "CLOUD", title: "TBD", speaker: "강시온" },
+      { track: "CLOUD", title: "추상화의 손익분기점", speaker: "강시온" },
       {
         track: "TECH",
         title: "Agent와 함께 일하기 위해 처음부터 다시 생각하기 (on AWS, with Kiro)",
@@ -234,8 +234,8 @@ export const speakers: Speaker[] = [
     name: "강시온",
     affiliation: "AUSG 6기",
     track: "CLOUD",
-    session: "TBD",
-    description: "세션 상세 정보는 곧 공개됩니다.",
+    session: "추상화의 손익분기점",
+    description: "멀티클라우드 IDP를 만들며 감춘 것과 남긴 것",
     image: null,
   },
   {
