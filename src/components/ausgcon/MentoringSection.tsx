@@ -50,7 +50,14 @@ export function MentoringSection() {
                 </span>
               </p>
             </div>
-            <span className="mentoring__apply mentoring__apply--pending">8월 10일 신청 시작</span>
+            <a
+              className="mentoring__apply"
+              href="https://forms.gle/HUuCv32adFSRx1R79"
+              target="_blank"
+              rel="noreferrer"
+            >
+              멘토링 신청 <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </header>
 
