@@ -1,11 +1,37 @@
 import Image from "next/image";
 
-const mentors = [
-  { name: "우수연", company: "IBM", level: "SENIOR", image: "/assets/ausgcon/mentors/woo-sooyeon.jpg" },
-  { name: "문성혁", company: "쿠팡", level: "SENIOR", image: "/assets/ausgcon/mentors/moon-seonghyeok.jpg" },
+type Mentor = {
+  name: string;
+  company: string;
+  level: "SENIOR" | "JUNIOR";
+  image: string;
+  keywords?: readonly string[];
+};
+
+const mentors: readonly Mentor[] = [
+  {
+    name: "우수연",
+    company: "IBM",
+    level: "SENIOR",
+    image: "/assets/ausgcon/mentors/woo-sooyeon.jpg",
+    keywords: ["Architect", "Agentic AI", "LLMOps", "Cloud", "Infra"],
+  },
+  {
+    name: "문성혁",
+    company: "쿠팡",
+    level: "SENIOR",
+    image: "/assets/ausgcon/mentors/moon-seonghyeok.jpg",
+    keywords: ["Backend", "B2C", "프로이직러", "대기업과 스타트업 경험"],
+  },
   { name: "안지완", company: "Moloco", level: "JUNIOR", image: "/assets/ausgcon/mentors/ahn-jiwan.jpg" },
-  { name: "오형근", company: "AWS", level: "JUNIOR", image: "/assets/ausgcon/mentors/oh-hyeonggeun.jpg" },
-] as const;
+  {
+    name: "오형근",
+    company: "AWS",
+    level: "JUNIOR",
+    image: "/assets/ausgcon/mentors/oh-hyeonggeun.jpg",
+    keywords: ["Container", "Network", "OpenSource", "Observability", "LLMOps"],
+  },
+];
 
 export function MentoringSection() {
   return (
@@ -37,8 +63,17 @@ export function MentoringSection() {
               </div>
               <div className="mentor-card__body">
                 <span>{mentor.level}</span>
-                <h4>{mentor.name}</h4>
-                <p>{mentor.company}</p>
+                <div className="mentor-card__identity">
+                  <h4>{mentor.name}</h4>
+                  <p>{mentor.company}</p>
+                </div>
+                {mentor.keywords ? (
+                  <ul className="mentor-card__keywords" aria-label={`${mentor.name} 멘토 키워드`}>
+                    {mentor.keywords.map((keyword) => (
+                      <li key={keyword}>{keyword}</li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
             </article>
           ))}
