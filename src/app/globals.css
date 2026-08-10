@@ -1738,11 +1738,6 @@ img {
   font-size: 1rem;
 }
 
-.mentoring__apply--pending {
-  justify-content: center;
-  cursor: default;
-}
-
 .mentoring__facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
