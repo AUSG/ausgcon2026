@@ -23,7 +23,13 @@ const mentors: readonly Mentor[] = [
     image: "/assets/ausgcon/mentors/moon-seonghyeok.jpg",
     keywords: ["Backend", "B2C", "프로이직러", "대기업과 스타트업 경험"],
   },
-  { name: "안지완", company: "Moloco", level: "JUNIOR", image: "/assets/ausgcon/mentors/ahn-jiwan.jpg" },
+  {
+    name: "안지완",
+    company: "Moloco",
+    level: "JUNIOR",
+    image: "/assets/ausgcon/mentors/ahn-jiwan.jpg",
+    keywords: ["Backend", "SRE", "Cloud", "Platform Engineering"],
+  },
   {
     name: "오형근",
     company: "AWS",
