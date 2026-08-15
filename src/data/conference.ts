@@ -232,7 +232,7 @@ export const speakers: Speaker[] = [
   },
   {
     name: "강시온",
-    affiliation: "AUSG 6기",
+    affiliation: "Lablup Inc. / AUSG 6기",
     track: "CLOUD",
     session: "추상화의 손익분기점",
     description: "멀티클라우드 IDP를 만들며 감춘 것과 남긴 것",
