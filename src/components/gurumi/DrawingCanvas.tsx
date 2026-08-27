@@ -11,6 +11,7 @@ import {
 import type { PointerEvent as ReactPointerEvent } from "react";
 
 import type { Stroke, StrokePoint } from "@/lib/gurumi/similarity";
+import { GURUMI_MAX_POINT_COUNT } from "@/lib/gurumi/stroke-codec";
 
 import styles from "./GurumiGame.module.css";
 
@@ -36,6 +37,7 @@ export const DrawingCanvas = forwardRef<DrawingCanvasHandle, DrawingCanvasProps>
     const strokesRef = useRef<Stroke[]>([]);
     const activeStrokeRef = useRef<Stroke | null>(null);
     const activePointerRef = useRef<number | null>(null);
+    const pointCountRef = useRef(0);
     const [hasInk, setHasInk] = useState(false);
 
     const redraw = useCallback(() => {
@@ -97,6 +99,7 @@ export const DrawingCanvas = forwardRef<DrawingCanvasHandle, DrawingCanvasProps>
           strokesRef.current = [];
           activeStrokeRef.current = null;
           activePointerRef.current = null;
+          pointCountRef.current = 0;
           setHasInk(false);
           redraw();
         },
@@ -107,9 +110,15 @@ export const DrawingCanvas = forwardRef<DrawingCanvasHandle, DrawingCanvasProps>
           return cloneStrokes(strokes);
         },
         undo() {
+          if (activeStrokeRef.current) {
+            pointCountRef.current -= activeStrokeRef.current.points.length;
+          } else {
+            const removedStroke = strokesRef.current.pop();
+            if (removedStroke) pointCountRef.current -= removedStroke.points.length;
+          }
           activeStrokeRef.current = null;
           activePointerRef.current = null;
-          strokesRef.current.pop();
+          pointCountRef.current = Math.max(0, pointCountRef.current);
           setHasInk(strokesRef.current.length > 0);
           redraw();
         },
@@ -155,11 +164,16 @@ export const DrawingCanvas = forwardRef<DrawingCanvasHandle, DrawingCanvasProps>
     }, []);
 
     const handlePointerDown = (event: ReactPointerEvent<HTMLCanvasElement>) => {
-      if (disabled || activePointerRef.current !== null) return;
+      if (
+        disabled ||
+        activePointerRef.current !== null ||
+        pointCountRef.current >= GURUMI_MAX_POINT_COUNT
+      ) return;
       event.preventDefault();
       event.currentTarget.setPointerCapture(event.pointerId);
       activePointerRef.current = event.pointerId;
       activeStrokeRef.current = { points: [pointFromEvent(event.nativeEvent)] };
+      pointCountRef.current += 1;
       setHasInk(true);
       redraw();
     };
@@ -169,7 +183,15 @@ export const DrawingCanvas = forwardRef<DrawingCanvasHandle, DrawingCanvasProps>
       event.preventDefault();
       const coalescedEvents = event.nativeEvent.getCoalescedEvents?.() ?? [event.nativeEvent];
       for (const coalescedEvent of coalescedEvents) {
-        activeStrokeRef.current.points.push(pointFromEvent(coalescedEvent));
+        if (pointCountRef.current >= GURUMI_MAX_POINT_COUNT) break;
+        const point = pointFromEvent(coalescedEvent);
+        const previousPoint = activeStrokeRef.current.points.at(-1);
+        if (
+          previousPoint &&
+          Math.hypot(point.x - previousPoint.x, point.y - previousPoint.y) < 0.001
+        ) continue;
+        activeStrokeRef.current.points.push(point);
+        pointCountRef.current += 1;
       }
       redraw();
     };

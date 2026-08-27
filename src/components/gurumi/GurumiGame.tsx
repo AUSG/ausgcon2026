@@ -15,14 +15,23 @@ import {
 import {
   createScoreRecord,
   GURUMI_LEADERBOARD_LIMIT,
+  isGurumiRoundSession,
   isLeaderboardResponse,
   isScoreRecord,
   isScoreSubmissionResponse,
+  normalizeGurumiName,
   sortRecords,
+  type GurumiRoundSession,
+  type PendingScore,
   type ScoreRecord,
   type ScoreSubmission,
   type ScoreSubmissionResponse,
 } from "@/lib/gurumi/records";
+import {
+  deletePendingGurumiScore,
+  listPendingGurumiScores,
+  savePendingGurumiScore,
+} from "@/lib/gurumi/offline-store";
 import { encodeStrokes } from "@/lib/gurumi/stroke-codec";
 
 import { DrawingCanvas, type DrawingCanvasHandle } from "./DrawingCanvas";
@@ -30,7 +39,6 @@ import styles from "./GurumiGame.module.css";
 
 const REFERENCE_IMAGE = "/assets/ausgcon/gurumi/reference.png";
 const SCORE_STORAGE_KEY = "ausgcon-2026-gurumi-scores-semantic-v2";
-const PENDING_STORAGE_KEY = "ausgcon-2026-gurumi-pending-semantic-v2";
 const ROUND_DURATION = 30_000;
 const LEADERBOARD_REFRESH_INTERVAL = 10_000;
 
@@ -47,24 +55,6 @@ const PART_LABELS: Record<GurumiPartId, string> = {
 type Phase = "intro" | "countdown" | "drawing" | "scoring" | "result";
 type StorageMode = "loading" | "live" | "saving" | "offline";
 
-type PendingScore = {
-  record: ScoreRecord;
-  submission: ScoreSubmission;
-};
-
-function isPendingScore(value: unknown): value is PendingScore {
-  if (!value || typeof value !== "object") return false;
-  const pending = value as Partial<PendingScore>;
-  return (
-    isScoreRecord(pending.record) &&
-    Boolean(pending.submission) &&
-    typeof pending.submission?.id === "string" &&
-    typeof pending.submission.name === "string" &&
-    typeof pending.submission.strokes === "string" &&
-    pending.submission.id === pending.record.id
-  );
-}
-
 function readCachedRecords() {
   try {
     const stored = window.localStorage.getItem(SCORE_STORAGE_KEY);
@@ -75,29 +65,6 @@ function readCachedRecords() {
       : [];
   } catch {
     return [];
-  }
-}
-
-function readPendingScores() {
-  try {
-    const stored = window.localStorage.getItem(PENDING_STORAGE_KEY);
-    if (!stored) return [];
-    const parsed: unknown = JSON.parse(stored);
-    return Array.isArray(parsed) ? parsed.filter(isPendingScore).slice(-25) : [];
-  } catch {
-    return [];
-  }
-}
-
-function persistPendingScores(pendingScores: PendingScore[]) {
-  try {
-    if (pendingScores.length === 0) {
-      window.localStorage.removeItem(PENDING_STORAGE_KEY);
-      return;
-    }
-    window.localStorage.setItem(PENDING_STORAGE_KEY, JSON.stringify(pendingScores.slice(-25)));
-  } catch {
-    // A failed submission still remains visible in memory for the current round.
   }
 }
 
@@ -126,13 +93,55 @@ async function loadServerLeaderboard() {
   return body.leaderboard;
 }
 
+class ScoreSubmissionError extends Error {
+  constructor(
+    message: string,
+    readonly retryable: boolean,
+    readonly status: number,
+  ) {
+    super(message);
+  }
+}
+
+async function responseErrorMessage(response: Response, fallback: string) {
+  try {
+    const body: unknown = await response.json();
+    if (
+      body &&
+      typeof body === "object" &&
+      typeof (body as { error?: unknown }).error === "string"
+    ) {
+      return (body as { error: string }).error;
+    }
+  } catch {
+    // Use the concise fallback below.
+  }
+  return fallback;
+}
+
+async function prepareRound() {
+  const response = await fetchWithTimeout("/api/gurumi/round", { method: "POST" });
+  if (!response.ok) {
+    throw new Error(await responseErrorMessage(response, "게임을 준비하지 못했습니다."));
+  }
+  const body: unknown = await response.json();
+  if (!isGurumiRoundSession(body)) throw new Error("게임 준비 응답이 올바르지 않습니다.");
+  return body;
+}
+
 async function submitScore(submission: ScoreSubmission): Promise<ScoreSubmissionResponse> {
   const response = await fetchWithTimeout("/api/gurumi/scores", {
     body: JSON.stringify(submission),
     headers: { "Content-Type": "application/json" },
     method: "POST",
   });
-  if (!response.ok) throw new Error("Score submission failed.");
+  if (!response.ok) {
+    throw new ScoreSubmissionError(
+      await responseErrorMessage(response, "점수를 저장하지 못했습니다."),
+      response.status === 408 || response.status === 429 || response.status >= 500,
+      response.status,
+    );
+  }
   const body: unknown = await response.json();
   if (!isScoreSubmissionResponse(body)) throw new Error("Score response is invalid.");
   return body;
@@ -270,10 +279,14 @@ function Leaderboard({
   records,
   storageMode,
   highlightId,
+  pendingCount = 0,
+  storageNotice = "",
 }: {
   records: ScoreRecord[];
   storageMode: StorageMode;
   highlightId?: string;
+  pendingCount?: number;
+  storageNotice?: string;
 }) {
   const [fullRankingOpen, setFullRankingOpen] = useState(false);
   const topFive = records.slice(0, 5);
@@ -286,7 +299,10 @@ function Leaderboard({
             <p>TODAY&apos;S RANKING</p>
             <h2>오늘의 TOP 5</h2>
           </div>
-          <span>{STORAGE_STATUS_LABEL[storageMode]}</span>
+          <span>
+            {STORAGE_STATUS_LABEL[storageMode]}
+            {storageMode === "offline" && pendingCount > 0 ? ` · ${pendingCount}` : ""}
+          </span>
         </div>
         {topFive.length > 0 ? (
           <ol className={styles.rankList}>
@@ -308,9 +324,9 @@ function Leaderboard({
           </div>
         )}
         <div className={styles.leaderboardFooter}>
-          {storageMode === "offline" && (
+          {(storageNotice || storageMode === "offline") && (
             <p className={styles.localNotice}>
-              연결 전까지 이 기기에 보관하고 자동으로 다시 저장합니다.
+              {storageNotice || "연결 전까지 이 기기에 보관하고 자동으로 다시 저장합니다."}
             </p>
           )}
           <button
@@ -352,6 +368,11 @@ export function GurumiGame() {
   const [records, setRecords] = useState<ScoreRecord[]>([]);
   const [currentRecord, setCurrentRecord] = useState<ScoreRecord | null>(null);
   const [storageMode, setStorageMode] = useState<StorageMode>("loading");
+  const [roundSession, setRoundSession] = useState<GurumiRoundSession | null>(null);
+  const [roundStarting, setRoundStarting] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [storageNotice, setStorageNotice] = useState("");
+  const [startError, setStartError] = useState("");
 
   useEffect(() => {
     const cachedRecords = readCachedRecords();
@@ -410,19 +431,30 @@ export function GurumiGame() {
   const synchronizeRecords = useCallback(async () => {
     if (synchronizingRef.current) return;
     synchronizingRef.current = true;
-    let pendingScores = readPendingScores();
+    let pendingScores = await listPendingGurumiScores();
     let serverRecords: ScoreRecord[] | null = null;
+    let rejectedCount = 0;
 
     try {
       for (const pending of [...pendingScores]) {
-        const response = await submitScore(pending.submission);
-        serverRecords = response.leaderboard;
-        pendingScores = pendingScores.filter((candidate) => candidate.record.id !== pending.record.id);
-        persistPendingScores(pendingScores);
+        try {
+          const response = await submitScore(pending.submission);
+          serverRecords = response.leaderboard;
+          await deletePendingGurumiScore(pending.id);
+          pendingScores = pendingScores.filter((candidate) => candidate.id !== pending.id);
+        } catch (error) {
+          if (error instanceof ScoreSubmissionError && !error.retryable) {
+            await deletePendingGurumiScore(pending.id);
+            pendingScores = pendingScores.filter((candidate) => candidate.id !== pending.id);
+            rejectedCount += 1;
+            continue;
+          }
+          throw error;
+        }
       }
 
       serverRecords ??= await loadServerLeaderboard();
-      pendingScores = readPendingScores();
+      pendingScores = await listPendingGurumiScores();
       const nextRecords = mergeRecords(serverRecords, pendingScores);
       recordsRef.current = nextRecords;
       setRecords(nextRecords);
@@ -430,11 +462,18 @@ export function GurumiGame() {
         current ? nextRecords.find((record) => record.id === current.id) ?? current : null,
       );
       persistRecords(nextRecords);
+      setPendingCount(pendingScores.length);
       setStorageMode(pendingScores.length > 0 ? "offline" : "live");
+      setStorageNotice(
+        rejectedCount > 0
+          ? `${rejectedCount}개 기록은 형식이 맞지 않아 자동 재시도에서 제외했습니다.`
+          : "",
+      );
     } catch {
       const nextRecords = mergeRecords(readCachedRecords(), pendingScores);
       recordsRef.current = nextRecords;
       setRecords(nextRecords);
+      setPendingCount(pendingScores.length);
       setStorageMode("offline");
     } finally {
       synchronizingRef.current = false;
@@ -450,7 +489,7 @@ export function GurumiGame() {
   }, [synchronizeRecords]);
 
   const finishRound = useCallback(async () => {
-    if (roundFinishedRef.current || !referenceModel) return;
+    if (roundFinishedRef.current || !referenceModel || !roundSession) return;
     roundFinishedRef.current = true;
     setSecondsLeft(0);
     setPhase("scoring");
@@ -459,10 +498,12 @@ export function GurumiGame() {
 
     const strokes = canvasRef.current?.getStrokes() ?? [];
     const score = scoreDrawing(strokes, referenceModel);
-    const id = window.crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const normalizedName = normalizeGurumiName(name);
+    if (!normalizedName) return;
+    const id = roundSession.id;
     const localRecord = createScoreRecord({
       id,
-      name: name.trim(),
+      name: normalizedName,
       createdAt: new Date().toISOString(),
       score,
     });
@@ -470,6 +511,7 @@ export function GurumiGame() {
     const submission: ScoreSubmission = {
       id,
       name: localRecord.name,
+      roundToken: roundSession.token,
       strokes: encoded,
     };
     let record = localRecord;
@@ -479,17 +521,33 @@ export function GurumiGame() {
       const response = await submitScore(submission);
       record = response.record;
       nextRecords = sortRecords(response.leaderboard).slice(0, GURUMI_LEADERBOARD_LIMIT);
-      const remainingPending = readPendingScores().filter(
-        (pending) => pending.record.id !== record.id,
-      );
-      persistPendingScores(remainingPending);
-      setStorageMode("live");
-    } catch {
-      const pendingScores = readPendingScores();
-      persistPendingScores([
-        ...pendingScores.filter((pending) => pending.record.id !== localRecord.id),
-        { record: localRecord, submission },
-      ]);
+      await deletePendingGurumiScore(record.id);
+      const remainingPending = await listPendingGurumiScores();
+      setPendingCount(remainingPending.length);
+      setStorageMode(remainingPending.length > 0 ? "offline" : "live");
+      setStorageNotice("");
+    } catch (error) {
+      const retryable = !(error instanceof ScoreSubmissionError) || error.retryable;
+      if (retryable) {
+        try {
+          await savePendingGurumiScore({
+            id: localRecord.id,
+            record: localRecord,
+            submission,
+          });
+          setStorageNotice("");
+        } catch {
+          setStorageNotice("이 기록을 자동 백업하지 못했습니다. 화면을 유지하고 운영진에게 알려주세요.");
+        }
+      } else {
+        setStorageNotice(
+          error instanceof Error
+            ? error.message
+            : "이 기록을 서버에 저장하지 못했습니다. 운영진에게 알려주세요.",
+        );
+      }
+      const pendingScores = await listPendingGurumiScores();
+      setPendingCount(pendingScores.length);
       nextRecords = sortRecords([...recordsRef.current, localRecord]).slice(
         0,
         GURUMI_LEADERBOARD_LIMIT,
@@ -506,7 +564,7 @@ export function GurumiGame() {
     revealTimeoutRef.current = window.setTimeout(() => {
       setPhase("result");
     }, remainingRevealDelay);
-  }, [name, persistRecords, referenceModel]);
+  }, [name, persistRecords, referenceModel, roundSession]);
 
   useEffect(() => {
     if (phase !== "countdown") return;
@@ -567,23 +625,42 @@ export function GurumiGame() {
     const index = sortedRecords.findIndex((record) => record.id === currentRecord.id);
     return index >= 0 ? index + 1 : null;
   }, [currentRecord, sortedRecords]);
-  const validName = name.trim().length >= 2;
+  const normalizedName = normalizeGurumiName(name);
+  const validName = normalizedName !== null;
   const referenceReady = referenceModel !== null && !referenceError;
 
-  const startRound = () => {
-    if (!validName || !referenceReady) return;
-    roundFinishedRef.current = false;
-    if (revealTimeoutRef.current !== null) window.clearTimeout(revealTimeoutRef.current);
-    revealTimeoutRef.current = null;
-    canvasRef.current?.clear();
-    setSecondsLeft(ROUND_DURATION / 1_000);
-    setCurrentRecord(null);
-    setPhase("countdown");
+  const startRound = async () => {
+    if (!normalizedName || !referenceReady || roundStarting) return;
+    setRoundStarting(true);
+    setStartError("");
+
+    try {
+      const session = await prepareRound();
+      setRoundSession(session);
+      setName(normalizedName);
+      roundFinishedRef.current = false;
+      if (revealTimeoutRef.current !== null) window.clearTimeout(revealTimeoutRef.current);
+      revealTimeoutRef.current = null;
+      canvasRef.current?.clear();
+      setSecondsLeft(ROUND_DURATION / 1_000);
+      setCurrentRecord(null);
+      setPhase("countdown");
+    } catch (error) {
+      setStartError(
+        error instanceof Error
+          ? error.message
+          : "게임을 준비하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      );
+    } finally {
+      setRoundStarting(false);
+    }
   };
 
   const resetForNextParticipant = () => {
     canvasRef.current?.clear();
     setName("");
+    setRoundSession(null);
+    setStartError("");
     setCurrentRecord(null);
     setSecondsLeft(ROUND_DURATION / 1_000);
     setPhase("intro");
@@ -667,17 +744,21 @@ export function GurumiGame() {
               <div className={styles.inputRow}>
                 <input
                   id="gurumi-name"
+                  aria-invalid={name.length > 0 && !validName ? "true" : undefined}
                   autoComplete="off"
-                  maxLength={10}
                   placeholder="2–10자로 입력"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter") startRound();
+                    if (event.key === "Enter") void startRound();
                   }}
                 />
-                <button disabled={!validName || !referenceReady} onClick={startRound} type="button">
-                  {referenceReady ? "도전 시작" : "이미지 준비 중"}
+                <button
+                  disabled={!validName || !referenceReady || roundStarting}
+                  onClick={() => void startRound()}
+                  type="button"
+                >
+                  {roundStarting ? "게임 준비 중" : referenceReady ? "도전 시작" : "이미지 준비 중"}
                   <span aria-hidden="true">↗</span>
                 </button>
               </div>
@@ -685,6 +766,7 @@ export function GurumiGame() {
               {referenceError && (
                 <p className={styles.errorMessage}>기준 이미지를 불러오지 못했습니다. 새로고침해 주세요.</p>
               )}
+              {startError && <p className={styles.errorMessage}>{startError}</p>}
             </div>
           </section>
 
@@ -708,7 +790,12 @@ export function GurumiGame() {
           </section>
 
           <aside className={styles.introRanking}>
-            <Leaderboard records={sortedRecords} storageMode={storageMode} />
+            <Leaderboard
+              pendingCount={pendingCount}
+              records={sortedRecords}
+              storageMode={storageMode}
+              storageNotice={storageNotice}
+            />
             <details className={styles.operatorTools}>
               <summary>운영 도구</summary>
               <div>
@@ -817,8 +904,10 @@ export function GurumiGame() {
             </div>
             <Leaderboard
               highlightId={currentRecord.id}
+              pendingCount={pendingCount}
               records={sortedRecords}
               storageMode={storageMode}
+              storageNotice={storageNotice}
             />
           </section>
         )}

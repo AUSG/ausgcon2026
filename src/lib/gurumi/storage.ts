@@ -120,7 +120,8 @@ export async function listGurumiScores(limit = GURUMI_LEADERBOARD_LIMIT) {
   return result.rows.map(recordFromRow);
 }
 
-async function findGurumiScore(id: string) {
+export async function findGurumiScore(id: string) {
+  await ensureSchema();
   const result = await getClient().execute({
     sql: `SELECT id, name, score, calibrated, raw, semantic, global_score,
       density_ratio, overdraw_efficiency, orientation_entropy, loop_monotony,
@@ -132,6 +133,35 @@ async function findGurumiScore(id: string) {
   });
 
   return result.rows[0] ? recordFromRow(result.rows[0]) : null;
+}
+
+export async function updateGurumiScore({
+  id,
+  name,
+  score,
+}: {
+  id: string;
+  name: string;
+  score: number;
+}) {
+  await ensureSchema();
+  const result = await getClient().execute({
+    sql: `UPDATE ${TABLE_NAME}
+      SET name = ?, score = ?
+      WHERE id = ?`,
+    args: [name, score, id],
+  });
+  if (result.rowsAffected === 0) return null;
+  return findGurumiScore(id);
+}
+
+export async function deleteGurumiScore(id: string) {
+  await ensureSchema();
+  const result = await getClient().execute({
+    sql: `DELETE FROM ${TABLE_NAME} WHERE id = ?`,
+    args: [id],
+  });
+  return result.rowsAffected > 0;
 }
 
 export async function saveGurumiScore({

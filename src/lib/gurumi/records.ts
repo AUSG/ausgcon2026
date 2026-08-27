@@ -27,7 +27,20 @@ export type ScoreRecord = {
 export type ScoreSubmission = {
   id: string;
   name: string;
+  roundToken: string;
   strokes: string;
+};
+
+export type GurumiRoundSession = {
+  expiresAt: string;
+  id: string;
+  token: string;
+};
+
+export type PendingScore = {
+  id: string;
+  record: ScoreRecord;
+  submission: ScoreSubmission;
 };
 
 export type ScoreSubmissionResponse = {
@@ -38,6 +51,46 @@ export type ScoreSubmissionResponse = {
 export type LeaderboardResponse = {
   leaderboard: ScoreRecord[];
 };
+
+export function normalizeGurumiName(value: unknown) {
+  if (typeof value !== "string") return null;
+  const name = value.normalize("NFKC").replace(/\s+/g, " ").trim();
+  const length = Array.from(name).length;
+  if (length < 2 || length > 10 || /[\u0000-\u001F\u007F]/.test(name)) return null;
+  return name;
+}
+
+export function isGurumiRecordId(value: unknown): value is string {
+  return typeof value === "string" && /^[A-Za-z0-9-]{8,80}$/.test(value);
+}
+
+export function isGurumiRoundSession(value: unknown): value is GurumiRoundSession {
+  if (!value || typeof value !== "object") return false;
+  const session = value as Partial<GurumiRoundSession>;
+  return (
+    isGurumiRecordId(session.id) &&
+    typeof session.token === "string" &&
+    session.token.length > 0 &&
+    typeof session.expiresAt === "string" &&
+    Number.isFinite(Date.parse(session.expiresAt))
+  );
+}
+
+export function isPendingScore(value: unknown): value is PendingScore {
+  if (!value || typeof value !== "object") return false;
+  const pending = value as Partial<PendingScore>;
+  return (
+    isGurumiRecordId(pending.id) &&
+    isScoreRecord(pending.record) &&
+    Boolean(pending.submission) &&
+    pending.id === pending.record.id &&
+    pending.submission?.id === pending.id &&
+    typeof pending.submission.name === "string" &&
+    typeof pending.submission.roundToken === "string" &&
+    pending.submission.roundToken.length > 0 &&
+    typeof pending.submission.strokes === "string"
+  );
+}
 
 export function createScoreRecord({
   id,

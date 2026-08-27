@@ -8,7 +8,7 @@ export type Stroke = {
 };
 
 export const GURUMI_SCORE_GRID_SIZE = 128;
-export const GURUMI_SCORE_VERSION = "semantic-shape-v2";
+export const GURUMI_SCORE_VERSION = "semantic-shape-v3";
 
 export const GURUMI_PART_IDS = [
   "body",
@@ -470,6 +470,7 @@ function analyzeStrokes(strokes: Stroke[]) {
   return {
     strokeLength,
     strokeCount,
+    radialLoopCount,
     orientationEntropy: entropy,
     dominantDirection,
     angularMonotony: closedLoopCount > 0 ? radialLoopCount / closedLoopCount : 0,
@@ -1041,9 +1042,11 @@ export function scoreDrawing(strokes: Stroke[], reference: GurumiReferenceModel)
   );
   const overdrawFactor = 0.35 + 0.65 * smoothstep(0.25, 0.7, overdrawEfficiency);
   const directionFactor = 0.5 + 0.5 * smoothstep(0.25, 0.55, strokeAnalysis.orientationEntropy);
-  const concentricFactor = strokeAnalysis.strokeCount >= 4
-    ? 1 - 0.55 * smoothstep(0.72, 0.94, strokeAnalysis.angularMonotony)
-    : 1;
+  const concentricRisk = strokeAnalysis.radialLoopCount >= 3
+    ? smoothstep(0.45, 0.78, strokeAnalysis.angularMonotony) *
+      smoothstep(1.5, 4.5, strokeAnalysis.radialLoopCount)
+    : 0;
+  const concentricFactor = 1 - 0.65 * concentricRisk;
   const spanWidth = userBounds.maxX - userBounds.minX;
   const spanHeight = userBounds.maxY - userBounds.minY;
   const spanFactor = clamp(Math.min(spanWidth / 0.32, spanHeight / 0.32));
@@ -1081,12 +1084,7 @@ export function scoreDrawing(strokes: Stroke[], reference: GurumiReferenceModel)
     99 - 50 * smoothstep(1.45, 1.85, densityRatio),
     89 + 10 * highScoreQuality,
   );
-  if (strokeAnalysis.strokeCount >= 4) {
-    scoreCap = Math.min(
-      scoreCap,
-      99 - 50 * smoothstep(0.72, 0.94, strokeAnalysis.angularMonotony),
-    );
-  }
+  scoreCap = Math.min(scoreCap, 99 - 60 * concentricRisk);
   const directionRisk = smoothstep(0.65, 0.85, strokeAnalysis.dominantDirection) *
     (1 - smoothstep(0.2, 0.5, strokeAnalysis.orientationEntropy));
   scoreCap = Math.min(scoreCap, 99 - 50 * directionRisk);
