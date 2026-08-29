@@ -75,20 +75,28 @@ function mergeRecords(serverRecords: ScoreRecord[], pendingScores: PendingScore[
   return sortRecords([...recordsById.values()]).slice(0, GURUMI_LEADERBOARD_LIMIT);
 }
 
-async function fetchWithTimeout(input: RequestInfo | URL, init?: RequestInit) {
+async function fetchJsonWithTimeout(input: RequestInfo | URL, init?: RequestInit) {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 8_000);
   try {
-    return await fetch(input, { ...init, signal: controller.signal });
+    const response = await fetch(input, { ...init, signal: controller.signal });
+    let body: unknown = null;
+    try {
+      body = await response.json();
+    } catch (error) {
+      if (response.ok || controller.signal.aborted) throw error;
+    }
+    return { body, response };
   } finally {
     window.clearTimeout(timeout);
   }
 }
 
 async function loadServerLeaderboard() {
-  const response = await fetchWithTimeout("/api/gurumi/scores", { cache: "no-store" });
+  const { body, response } = await fetchJsonWithTimeout("/api/gurumi/scores", {
+    cache: "no-store",
+  });
   if (!response.ok) throw new Error("Leaderboard request failed.");
-  const body: unknown = await response.json();
   if (!isLeaderboardResponse(body)) throw new Error("Leaderboard response is invalid.");
   return body.leaderboard;
 }
@@ -103,46 +111,41 @@ class ScoreSubmissionError extends Error {
   }
 }
 
-async function responseErrorMessage(response: Response, fallback: string) {
-  try {
-    const body: unknown = await response.json();
-    if (
-      body &&
-      typeof body === "object" &&
-      typeof (body as { error?: unknown }).error === "string"
-    ) {
-      return (body as { error: string }).error;
-    }
-  } catch {
-    // Use the concise fallback below.
+function responseErrorMessage(body: unknown, fallback: string) {
+  if (
+    body &&
+    typeof body === "object" &&
+    typeof (body as { error?: unknown }).error === "string"
+  ) {
+    return (body as { error: string }).error;
   }
   return fallback;
 }
 
 async function prepareRound() {
-  const response = await fetchWithTimeout("/api/gurumi/round", { method: "POST" });
+  const { body, response } = await fetchJsonWithTimeout("/api/gurumi/round", {
+    method: "POST",
+  });
   if (!response.ok) {
-    throw new Error(await responseErrorMessage(response, "게임을 준비하지 못했습니다."));
+    throw new Error(responseErrorMessage(body, "게임을 준비하지 못했습니다."));
   }
-  const body: unknown = await response.json();
   if (!isGurumiRoundSession(body)) throw new Error("게임 준비 응답이 올바르지 않습니다.");
   return body;
 }
 
 async function submitScore(submission: ScoreSubmission): Promise<ScoreSubmissionResponse> {
-  const response = await fetchWithTimeout("/api/gurumi/scores", {
+  const { body, response } = await fetchJsonWithTimeout("/api/gurumi/scores", {
     body: JSON.stringify(submission),
     headers: { "Content-Type": "application/json" },
     method: "POST",
   });
   if (!response.ok) {
     throw new ScoreSubmissionError(
-      await responseErrorMessage(response, "점수를 저장하지 못했습니다."),
+      responseErrorMessage(body, "점수를 저장하지 못했습니다."),
       response.status === 408 || response.status === 429 || response.status >= 500,
       response.status,
     );
   }
-  const body: unknown = await response.json();
   if (!isScoreSubmissionResponse(body)) throw new Error("Score response is invalid.");
   return body;
 }

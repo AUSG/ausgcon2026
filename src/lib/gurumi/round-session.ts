@@ -5,8 +5,9 @@ import { createHmac, createHash, randomUUID, timingSafeEqual } from "node:crypto
 import { isGurumiRecordId } from "./records";
 
 const TOKEN_VERSION = 1;
-const TOKEN_MAX_AGE_MS = 18 * 60 * 60 * 1_000;
+const TOKEN_MAX_AGE_MS = 72 * 60 * 60 * 1_000;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1_000;
+export const GURUMI_EXPECTED_ROUND_DURATION_MS = 33_000;
 // Several booth devices can share one venue NAT address. Keep the limit high
 // enough for event traffic while still bounding automated bursts.
 const RATE_LIMITS = {
@@ -112,11 +113,11 @@ export function createGurumiRoundSession() {
   };
 }
 
-export function verifyGurumiRoundSession(token: string, expectedId: string) {
-  if (token.length > 1_024) return false;
+export function readGurumiRoundSession(token: string, expectedId: string) {
+  if (token.length > 1_024) return null;
   const [encodedPayload, suppliedSignature, extra] = token.split(".");
-  if (!encodedPayload || !suppliedSignature || extra) return false;
-  if (!safeEqual(suppliedSignature, signature(encodedPayload))) return false;
+  if (!encodedPayload || !suppliedSignature || extra) return null;
+  if (!safeEqual(suppliedSignature, signature(encodedPayload))) return null;
 
   try {
     const payload = JSON.parse(
@@ -124,7 +125,7 @@ export function verifyGurumiRoundSession(token: string, expectedId: string) {
     ) as Partial<RoundTokenPayload>;
     const now = Date.now();
 
-    return (
+    if (
       payload.version === TOKEN_VERSION &&
       isGurumiRecordId(payload.id) &&
       payload.id === expectedId &&
@@ -133,8 +134,19 @@ export function verifyGurumiRoundSession(token: string, expectedId: string) {
       payload.issuedAt <= now + 60_000 &&
       payload.expiresAt >= now &&
       payload.expiresAt - payload.issuedAt <= TOKEN_MAX_AGE_MS
-    );
+    ) {
+      return {
+        expiresAt: payload.expiresAt,
+        id: payload.id,
+        issuedAt: payload.issuedAt,
+      };
+    }
+    return null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+export function verifyGurumiRoundSession(token: string, expectedId: string) {
+  return readGurumiRoundSession(token, expectedId) !== null;
 }

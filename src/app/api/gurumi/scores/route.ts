@@ -7,8 +7,9 @@ import {
 import { scoreGurumiDrawing } from "@/lib/gurumi/server-score";
 import { decodeStrokes } from "@/lib/gurumi/stroke-codec";
 import {
+  GURUMI_EXPECTED_ROUND_DURATION_MS,
+  readGurumiRoundSession,
   takeGurumiRateLimit,
-  verifyGurumiRoundSession,
 } from "@/lib/gurumi/round-session";
 import {
   findGurumiScore,
@@ -124,7 +125,8 @@ export async function POST(request: Request) {
 
   const submission = normalizeSubmission(body);
   if (!submission) return errorResponse("참가자 정보가 올바르지 않습니다.", 400);
-  if (!verifyGurumiRoundSession(submission.roundToken, submission.id)) {
+  const roundSession = readGurumiRoundSession(submission.roundToken, submission.id);
+  if (!roundSession) {
     return errorResponse("게임 참여 시간이 만료됐습니다. 새 게임을 시작해 주세요.", 401);
   }
 
@@ -154,7 +156,9 @@ export async function POST(request: Request) {
       id: submission.id,
       name: submission.name,
       score,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(
+        Math.min(Date.now(), roundSession.issuedAt + GURUMI_EXPECTED_ROUND_DURATION_MS),
+      ).toISOString(),
     });
     const record = await saveGurumiScore({
       record: candidate,

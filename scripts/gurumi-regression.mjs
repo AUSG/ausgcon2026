@@ -101,6 +101,10 @@ assert.equal(records.normalizeGurumiName("  구르미   최고  "), "구르미 �
 
 const signedRound = roundSession.createGurumiRoundSession();
 assert.equal(roundSession.verifyGurumiRoundSession(signedRound.token, signedRound.id), true);
+const verifiedRound = roundSession.readGurumiRoundSession(signedRound.token, signedRound.id);
+assert.ok(verifiedRound);
+assert.equal(verifiedRound.id, signedRound.id);
+assert.equal(verifiedRound.expiresAt - verifiedRound.issuedAt, 72 * 60 * 60 * 1_000);
 assert.equal(
   roundSession.verifyGurumiRoundSession(
     signedRound.token,
