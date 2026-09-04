@@ -4,6 +4,7 @@ import { handsOnSessions, speakers, timetable, type Speaker, type Track } from "
 import { SpeakerPortrait } from "@/components/ausgcon/SpeakerPortrait";
 import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 type MobileTrack = Track | "HANDS-ON";
 type SessionTrack = Speaker["track"];
@@ -253,7 +254,8 @@ export function ScheduleSection() {
         </div>
       </div>
 
-      {selectedSession && (
+      {selectedSession &&
+        createPortal(
         <div
           className="speaker-dialog"
           onMouseDown={(event) => {
@@ -302,7 +304,8 @@ export function ScheduleSection() {
               <p>{selectedSession.description}</p>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </section>
   );
