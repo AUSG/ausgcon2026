@@ -3,6 +3,7 @@
 import { speakers, type Speaker } from "@/data/conference";
 import { SpeakerPortrait } from "@/components/ausgcon/SpeakerPortrait";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface SelectedSpeaker {
   speaker: Speaker;
@@ -75,7 +76,8 @@ export function SpeakersSection() {
         </div>
       </div>
 
-      {selectedSpeaker && (
+      {selectedSpeaker &&
+        createPortal(
         <div
           className="speaker-dialog"
           onMouseDown={(event) => {
@@ -105,7 +107,8 @@ export function SpeakersSection() {
               <p>{selectedSpeaker.speaker.description}</p>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </section>
   );
