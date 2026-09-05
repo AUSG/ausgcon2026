@@ -14,6 +14,7 @@ import {
 import type { ScoreRecord } from "@/lib/gurumi/records";
 
 import styles from "./GurumiAdmin.module.css";
+import { GurumiAwards } from "./GurumiAwards";
 
 const PAGE_SIZE = 50;
 
@@ -60,6 +61,7 @@ export function GurumiAdmin({
     initialError ? "error" : "success",
   );
   const [isPending, startTransition] = useTransition();
+  const [awardIndex, setAwardIndex] = useState<number | null>(null);
 
   const rankedRecords = useMemo(
     () => records.map((record, index) => ({ rank: index + 1, record })),
@@ -234,6 +236,7 @@ export function GurumiAdmin({
               />
             </label>
             <div>
+              <button disabled={isPending || records.length === 0} onClick={() => setAwardIndex(0)} type="button">시상 화면 (1위부터)</button>
               <button disabled={isPending} onClick={handleRefresh} type="button">새로고침</button>
               <button disabled={isPending} onClick={handleLogout} type="button">로그아웃</button>
             </div>
@@ -296,6 +299,7 @@ export function GurumiAdmin({
                         <td><code title={record.id}>{record.id.slice(0, 8)}</code></td>
                         <td>
                           <div className={styles.rowActions}>
+                            <button disabled={isPending} onClick={() => setAwardIndex(rank - 1)} type="button">그림 보기</button>
                             <button
                               disabled={!dirty || isPending || busy}
                               onClick={() => saveRecord(record)}
@@ -341,6 +345,9 @@ export function GurumiAdmin({
             점수를 수정해도 참가자가 그린 선 좌표와 자동 채점 상세값은 그대로 보존됩니다.
           </p>
         </div>
+      )}
+      {authenticated && awardIndex !== null && records[awardIndex] && (
+        <GurumiAwards records={records} initialIndex={awardIndex} onClose={() => setAwardIndex(null)} />
       )}
     </main>
   );

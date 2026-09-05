@@ -329,7 +329,7 @@
 .recordsPanel th:nth-child(3) { width: 100px; }
 .recordsPanel th:nth-child(4) { width: 150px; }
 .recordsPanel th:nth-child(5) { width: 120px; }
-.recordsPanel th:nth-child(6) { width: 150px; }
+.recordsPanel th:nth-child(6) { width: 225px; }
 
 .recordsPanel tbody tr {
   border-bottom: 1px solid rgba(17, 20, 24, 0.075);
@@ -376,6 +376,9 @@
   border-color: #82ab17;
   background: var(--admin-lime);
 }
+
+.rowActions { white-space: nowrap; }
+.toolbar > div { flex-wrap: wrap; }
 
 .rowActions button:last-child {
   color: #aa3c24;

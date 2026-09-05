@@ -99,6 +99,31 @@ assert.equal(records.normalizeGurumiName("😀"), null);
 assert.equal(records.normalizeGurumiName("😀😀"), "😀😀");
 assert.equal(records.normalizeGurumiName("  구르미   최고  "), "구르미 최고");
 
+let drawingAuthenticated = false;
+let drawingReads = 0;
+const savedDrawing = encodeStroke([{ x: 0.1, y: 0.2 }, { x: 0.7, y: 0.8 }]);
+const drawingRoute = compileTypeScript("src/app/gurumi/admin/drawings/[id]/route.ts", (id) => {
+  if (id === "@/lib/gurumi/admin-auth") return { isGurumiAdminAuthenticated: async () => drawingAuthenticated };
+  if (id === "@/lib/gurumi/records") return records;
+  if (id === "@/lib/gurumi/storage") return { findGurumiDrawing: async (recordId) => {
+    drawingReads += 1;
+    return recordId === "drawing-record" ? { strokes: savedDrawing } : null;
+  } };
+  throw new Error(`Unexpected runtime import: ${id}`);
+});
+const getDrawing = (id) => drawingRoute.GET(new Request("https://example.com/gurumi/admin/drawings/" + id), { params: Promise.resolve({ id }) });
+assert.equal((await getDrawing("drawing-record")).status, 401);
+assert.equal(drawingReads, 0, "Unauthenticated drawing requests must not query the database.");
+drawingAuthenticated = true;
+assert.equal((await getDrawing("invalid!")).status, 400);
+assert.equal(drawingReads, 0);
+assert.equal((await getDrawing("missing-record")).status, 404);
+const drawingResponse = await getDrawing("drawing-record");
+assert.equal(drawingResponse.status, 200);
+assert.equal(drawingResponse.headers.get("cache-control"), "private, no-store");
+assert.equal((await drawingResponse.json()).strokes, savedDrawing);
+assert.equal(codec.decodeStrokes(savedDrawing).pointCount, 2);
+
 const signedRound = roundSession.createGurumiRoundSession();
 assert.equal(roundSession.verifyGurumiRoundSession(signedRound.token, signedRound.id), true);
 const verifiedRound = roundSession.readGurumiRoundSession(signedRound.token, signedRound.id);
