@@ -2,6 +2,8 @@ import "server-only";
 
 import { createClient, type Client, type Row } from "@libsql/client";
 
+import { getGurumiDatabaseConfig } from "./database-config";
+
 import {
   GURUMI_LEADERBOARD_LIMIT,
   isScoreRecord,
@@ -14,18 +16,9 @@ const TABLE_NAME = "gurumi_scores";
 let client: Client | null = null;
 let schemaPromise: Promise<void> | null = null;
 
-function requiredEnvironmentVariable(name: string) {
-  const value = process.env[name];
-  if (!value) throw new Error(`Missing required environment variable: ${name}`);
-  return value;
-}
-
 function getClient() {
   if (!client) {
-    client = createClient({
-      authToken: requiredEnvironmentVariable("AUSGCON2026_TURSO_AUTH_TOKEN"),
-      url: requiredEnvironmentVariable("AUSGCON2026_TURSO_DATABASE_URL"),
-    });
+    client = createClient(getGurumiDatabaseConfig());
   }
   return client;
 }

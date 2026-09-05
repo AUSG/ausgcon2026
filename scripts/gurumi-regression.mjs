@@ -84,6 +84,15 @@ const records = compileTypeScript(
     throw new Error(`Unexpected runtime import: ${id}`);
   },
 );
+const databaseConfig = compileTypeScript("src/lib/gurumi/database-config.ts", (id) => {
+  if (id === "server-only") return {};
+  throw new Error(`Unexpected runtime import: ${id}`);
+});
+const defaultDatabase = { AUSGCON2026_TURSO_DATABASE_URL: "libsql://default", AUSGCON2026_TURSO_AUTH_TOKEN: "default-token" };
+assert.deepEqual(databaseConfig.getGurumiDatabaseConfig(defaultDatabase), { url: "libsql://default", authToken: "default-token" });
+assert.deepEqual(databaseConfig.getGurumiDatabaseConfig({ ...defaultDatabase, GURUMI_EVENT_DATABASE_URL: "libsql://event", GURUMI_EVENT_AUTH_TOKEN: "event-token" }), { url: "libsql://event", authToken: "event-token" });
+assert.throws(() => databaseConfig.getGurumiDatabaseConfig({ ...defaultDatabase, GURUMI_EVENT_DATABASE_URL: "libsql://event" }));
+assert.throws(() => databaseConfig.getGurumiDatabaseConfig({ ...defaultDatabase, GURUMI_EVENT_AUTH_TOKEN: "event-token" }));
 process.env.GURUMI_ROUND_SECRET = "gurumi-regression-secret";
 const roundSession = compileTypeScript(
   "src/lib/gurumi/round-session.ts",
