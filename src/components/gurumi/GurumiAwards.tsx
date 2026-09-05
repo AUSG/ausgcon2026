@@ -102,6 +102,9 @@ export function GurumiAwards({ records, initialIndex, onClose }: {
         // A modal dialog itself cannot be a fullscreen target.
         await document.documentElement.requestFullscreen();
         ownsFullscreen.current = true;
+        // Fullscreen moves the root into the top layer; lift the modal above it again.
+        dialogRef.current?.close();
+        dialogRef.current?.showModal();
       }
     } catch {
       setFullscreenError("브라우저의 전체 화면 메뉴를 사용해 주세요.");
