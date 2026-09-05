@@ -135,6 +135,15 @@ export async function findGurumiScore(id: string) {
   return result.rows[0] ? recordFromRow(result.rows[0]) : null;
 }
 
+export async function findGurumiDrawing(id: string) {
+  await ensureSchema();
+  const result = await getClient().execute({
+    sql: `SELECT strokes FROM ${TABLE_NAME} WHERE id = ? LIMIT 1`,
+    args: [id],
+  });
+  return result.rows[0] ? { strokes: stringFromRow(result.rows[0].strokes) } : null;
+}
+
 export async function updateGurumiScore({
   id,
   name,
